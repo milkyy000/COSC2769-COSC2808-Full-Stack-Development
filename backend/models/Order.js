@@ -16,4 +16,4 @@ const orderItemSchema = new Schema({
   price: { type: Number, required: true, min: 0 } // snapshot price
 });
 
-module.exports = mongoose.model('Order', orderItemSchema);
+module.exports = mongoose.model('Order', orderSchema);
