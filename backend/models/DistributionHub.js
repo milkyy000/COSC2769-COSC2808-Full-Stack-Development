@@ -7,3 +7,5 @@ const distributionHubSchema = new Schema({
 });
 
 module.exports = mongoose.model('DistributionHub', distributionHubSchema);
+
+
