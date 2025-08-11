@@ -15,7 +15,7 @@ async function main() {
 
 
 const product1 = new Product({
-    vendor: [vendor._id],
+    vendor: '64f0c1e2f1d2e3a4b5c6d7ea', 
     name: 'Product 1',
     price: 19.99,
     image: 'https://example.com/product1.jpg',
@@ -26,7 +26,7 @@ product1.save()
     .catch(err => console.error('Error adding Product 1:', err));
 
 const product2 = new Product({
-    vendor: [vendor._id],
+    vendor: '64f0c1e2f1d2e3a4b5c6d7eb',
     name: 'Product 2',
     price: 29.99,
     image: 'https://example.com/product2.jpg',
@@ -37,7 +37,7 @@ product2.save()
     .catch(err => console.error('Error adding Product 2:', err));
 
 const product3 = new Product({
-    vendor: [vendor._id],
+    vendor: '64f0c1e2f1d2e3a4b5c6d7ea',
     name: 'Product 3',
     price: 39.99,
     image: 'https://example.com/product3.jpg',
