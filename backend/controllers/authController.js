@@ -6,18 +6,22 @@
 // ID: s3975170
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
+const Customer = require("../models/Customer");
+const Vendor = require("../models/Vendor");
+const Shipper = require("../models/Shipper");
+const DistributionHub = require("../models/DistributionHub")
 
 exports.register = async (req, res) => {
     try {
         const { role, username, password, profilePicture, name, address, businessName, businessAddress, distributionHub} = req.body;
 
-        // 1. Validate username
+        // Validate username
         const usernameRegex = /^[A-Za-z0-9]{8,15}$/;
         if (!usernameRegex.test(username)) {
             return res.status(400).json({msg: "Username must be 8–15 characters, letters and digits only"});
         }
 
-        // 2. Validate passwor
+        // Validate passwor
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
         if (!passwordRegex.test(password)) {
             return res.status(400).json({msg: "Password must be 8–20 chars, include upper, lower, digit, and special !@#$%^&*"});
@@ -51,11 +55,25 @@ exports.register = async (req, res) => {
         // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Create user
-        const newUser = new User ({
-            role, username, passwordHash: hashedPassword, profilePicture, name, address, businessName, businessAddress, distributionHub,
-        })
+        // Create user (add transacsion)
+        const newUser = new User ({role, username, passwordHash: hashedPassword, profilePicture,})
         await newUser.save();
+
+        if (role === "customer") {
+            const newCustomer = new Customer({user: newUser._id, name, address});
+            await newCustomer.save();
+        }
+        else if (role === "vendor") {
+            const newVendor = new Vendor({user: newUser._id, businessName, businessAddress});
+            await newVendor.save();
+        } else if (role === "shipper") {
+            const hubDoc = await DistributionHub.findOne({name: distributionHub});
+            if (!hubDoc)
+                return res.status(400).json({msg: "Distribution hub not found"})
+            const newShipper = new Shipper({user: newUser._id, distributionHub: hubDoc._id});
+            await newShipper.save();
+        }
+
         return res.json({msg: "Registration successful"});
     } catch (err) {
         console.error(err);
