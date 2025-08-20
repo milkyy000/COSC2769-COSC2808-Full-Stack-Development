@@ -47,7 +47,9 @@ export default function Login() {
             {/* Displayed successfully */}
             {user && <p style={{color: "green"}}>Login successful! Welcome, {user.username}</p>}
 
-            <p>Don't have an account? <Link to="/register">Register now!</Link></p>
+            <p>Don't have an account? <Link to="/registerCustomer">Register as Customer now!</Link></p>
+            <p>Don't have an account? <Link to="/registerVendor">Register as Vendor now!</Link></p>
+            <p>Don't have an account? <Link to="/registerShipper">Register as Shipper now!</Link></p>
         </div>
         
     );

@@ -14,7 +14,7 @@ const DistributionHub = require("../models/DistributionHub")
 exports.register = async (req, res) => {
     try {
         const { role, username, password, profilePicture, name, address, businessName, businessAddress, distributionHub} = req.body;
-
+        
         // Validate username
         const usernameRegex = /^[A-Za-z0-9]{8,15}$/;
         if (!usernameRegex.test(username)) {
