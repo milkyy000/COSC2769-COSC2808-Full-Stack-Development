@@ -14,8 +14,13 @@ mongoose.connect(process.env.MONGO_URI)
     .catch(err => console.error(err));
 
 //-----------------------------------------------------------------------------------------------------
+//Routers//
+//-----------------------------------------------------------------------------------------------------
 
+const vendorRoutes = require('./routes/vendorRoutes');
+app.use('/api/vendors', vendorRoutes);
 
+//=====================================================================================================
 app.listen(process.env.PORT, () => {
     console.log(`🚀 Server running on port ${process.env.PORT}`);
 });
