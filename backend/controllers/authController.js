@@ -14,7 +14,7 @@ const DistributionHub = require("../models/DistributionHub")
 exports.register = async (req, res) => {
     try {
         const { role, username, password, profilePicture, name, address, businessName, businessAddress, distributionHub} = req.body;
-        
+
         // Validate username
         const usernameRegex = /^[A-Za-z0-9]{8,15}$/;
         if (!usernameRegex.test(username)) {
@@ -25,26 +25,6 @@ exports.register = async (req, res) => {
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
         if (!passwordRegex.test(password)) {
             return res.status(400).json({msg: "Password must be 8–20 chars, include upper, lower, digit, and special !@#$%^&*"});
-        }
-
-        // Validate role-specific fields
-        if (role === "customer") {
-            if (!name || name.length < 5)
-                return res.status(400).json({msg: "Customer name required, min 5 chars"});
-            if (!address || address.length < 5)
-                return res.status(400).json({msg: "Customer address required, min 5 chars"});
-        }
-
-        if (role === "vendor") {
-            if (!businessName  || businessName .length < 5)
-                return res.status(400).json({msg: "Business name required, min 5 chars"});
-            if (!businessAddress  || businessAddress .length < 5)
-                return res.status(400).json({msg: "Business address required, min 5 chars"});
-        }
-
-        if (role === "shipper") {
-            if (!distributionHub)
-                return res.status(400).json({msg: "Shipper must select a distribution hub"});
         }
 
         // Check duplicate username
@@ -74,7 +54,7 @@ exports.register = async (req, res) => {
             await newShipper.save();
         }
 
-        return res.json({msg: "Registration successful"});
+        return res.json({msg: "Registration successful", userId: newUser._id});
     } catch (err) {
         console.error(err);
         return res.status(500).json({msg: "Server error"});

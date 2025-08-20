@@ -36,8 +36,8 @@ export default function RegisterCustomer() {
         <div>
             <h2>Register as Customer</h2>
             <form onSubmit={handleSubmit}>
-                <input placeholder="Username" onChange={e => setForm({...form, username: e.target.value})}/>
-                <input placeholder="Password" type="password" onChange={e => setForm({...form, password: e.target.value})}/>
+                <input placeholder="Username" required onChange={e => setForm({...form, username: e.target.value.trim()})}/>
+                <input placeholder="Password" required type="password" onChange={e => setForm({...form, password: e.target.value})}/>
                 <input placeholder="Name" onChange={e => setForm({...form, name: e.target.value})}/>
                 <input placeholder="Address" onChange={e => setForm({...form, address: e.target.value})}/>
                 <button type="submit" disabled={loading}>{loading ? "Registering..." : "Register"}</button>

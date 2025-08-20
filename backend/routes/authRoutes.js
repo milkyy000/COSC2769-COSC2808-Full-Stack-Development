@@ -7,10 +7,22 @@
 const express = require("express");
 const router = express.Router();
 const {register, login, logout, myAccount} = require("../controllers/authController");
+const {createCustomer, getCustomers} = require("../controllers/customerController");
+const {createVendor, getVendors} = require("../controllers/vendorController");
+const {createShipper, getShippers} = require("../controllers/shipperController");
 
 router.post("/register", register);
 router.post("/login", login);
 router.post("/logout", logout);
 router.get("/myAccount", myAccount);
+// Customer
+router.get("/register", getCustomers);
+router.post("/register", createCustomer);
+// Vendor
+router.get("/register", getVendors);
+router.post("/register", createVendor);
+// Shipper
+router.get("/register", getShippers);
+router.post("/register", createShipper);
 
 module.exports = router;
