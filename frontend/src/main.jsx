@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import NotFound from '../pages/NotFound';
 import CustomerProfile from '../pages/CustomerProfile';
+import VendorDashboard from '../pages/Vendor/VendorDashboard';
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,11 @@ const router = createBrowserRouter([
     path: '/customerProfile',
     element: <CustomerProfile/>,
     errorElement: <NotFound/> 
+  },
+  {
+    path: '/vendorDashboard',
+    element: <VendorDashboard/>,
+    errorElement: <NotFound/>
   }
 ]);
 
