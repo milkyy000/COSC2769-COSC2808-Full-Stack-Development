@@ -37,8 +37,8 @@ export default function Login() {
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                <input placeholder="Username" onChange={e => setForm({...form, username: e.target.value})}/>
-                <input placeholder="Password" type="password" onChange={e => setForm({...form, password: e.target.value})}/>
+                <input placeholder="Username" required onChange={e => setForm({...form, username: e.target.value})}/>
+                <input placeholder="Password" type="password" required onChange={e => setForm({...form, password: e.target.value})}/>
                 <button type="submit" disabled={loading}>{loading ? "Logging in..." : "Login"}</button>
             </form>
 

@@ -16,13 +16,13 @@ router.post("/login", login);
 router.post("/logout", logout);
 router.get("/myAccount", myAccount);
 // Customer
-router.get("/register", getCustomers);
-router.post("/register", createCustomer);
+router.get("/customers", getCustomers);
+router.post("/customers", createCustomer);
 // Vendor
-router.get("/register", getVendors);
-router.post("/register", createVendor);
+router.get("/vendors", getVendors);
+router.post("/vendors", createVendor);
 // Shipper
-router.get("/register", getShippers);
-router.post("/register", createShipper);
+router.get("/shippers", getShippers);
+router.post("/shippers", createShipper);
 
 module.exports = router;

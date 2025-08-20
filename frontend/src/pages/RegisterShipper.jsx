@@ -39,7 +39,7 @@ export default function RegisterShipper() {
             <form onSubmit={handleSubmit}>
                 <input placeholder="Username" required onChange={e => setForm({...form, username: e.target.value.trim()})}/>
                 <input placeholder="Password" required type="password" onChange={e => setForm({...form, password: e.target.value})}/>
-                <select value={form.distributionHub} onChange={e => setForm({...form, distributionHub: e.target.value})}>
+                <select value={form.distributionHub} required onChange={e => setForm({...form, distributionHub: e.target.value})}>
                     <option value="">-- Select province/city --</option>
                     {provinces.map((province) => 
                         (<option key={province} value={province}>{province}</option>))}

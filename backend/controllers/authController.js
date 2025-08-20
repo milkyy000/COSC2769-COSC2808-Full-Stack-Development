@@ -12,6 +12,8 @@ const Shipper = require("../models/Shipper");
 const DistributionHub = require("../models/DistributionHub")
 
 exports.register = async (req, res) => {
+    const session = await User.startSession();
+    session.startTransaction();
     try {
         const { role, username, password, profilePicture, name, address, businessName, businessAddress, distributionHub} = req.body;
 
@@ -37,26 +39,30 @@ exports.register = async (req, res) => {
 
         // Create user (add transacsion)
         const newUser = new User ({role, username, passwordHash: hashedPassword, profilePicture,})
-        await newUser.save();
+        await newUser.save({session});
 
         if (role === "customer") {
             const newCustomer = new Customer({user: newUser._id, name, address});
-            await newCustomer.save();
+            await newCustomer.save({session});
         }
         else if (role === "vendor") {
             const newVendor = new Vendor({user: newUser._id, businessName, businessAddress});
-            await newVendor.save();
+            await newVendor.save({session});
         } else if (role === "shipper") {
             const hubDoc = await DistributionHub.findOne({name: distributionHub});
             if (!hubDoc)
                 return res.status(400).json({msg: "Distribution hub not found"})
             const newShipper = new Shipper({user: newUser._id, distributionHub: hubDoc._id});
-            await newShipper.save();
+            await newShipper.save({session});
         }
+        await session.commitTransaction();
+        session.endSession();
 
         return res.json({msg: "Registration successful", userId: newUser._id});
     } catch (err) {
-        console.error(err);
+        await session.abortTransaction();
+        session.endSession();
+        console.error("Register error:", err);
         return res.status(500).json({msg: "Server error"});
     }
 };
