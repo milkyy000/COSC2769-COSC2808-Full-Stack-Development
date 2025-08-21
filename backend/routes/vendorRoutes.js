@@ -2,8 +2,8 @@
 // Course: COSC2769 - Full Stack Development
 // Semester: 2025B
 // Assessment: Assignment 02
-// Author: Your Name
-// ID: Your Student ID
+// Author: Tran Quy Duc
+// ID: s4070049
 
 const express = require('express');
 const router = express.Router();
