@@ -9,7 +9,7 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 import NotFound from "../pages/NotFound";
 import ViewMyProducts from "../pages/Vendor/ViewMyProducts";
 import AddProduct from "../pages/Vendor/AddProduct";
-import Layout from "../components/Layout";
+import Layout from "../components/Vendor/Layout";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +33,11 @@ const router = createBrowserRouter([
       </Layout>
     ),
     errorElement: <NotFound />,
+  },
+  // ✅ Catch-all route (must be last)
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);
 
