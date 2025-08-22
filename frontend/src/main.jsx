@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import NotFound from '../pages/NotFound';
-import CustomerProfile from '../pages/CustomerProfile';
+import CustomerProfile from '../pages/Customer/CustomerProfile';
 
 const router = createBrowserRouter([
   {
