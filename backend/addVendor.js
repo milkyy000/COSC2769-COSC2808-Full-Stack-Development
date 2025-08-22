@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const path = require('path');
-
+const bcrypt = require('bcrypt');
 dotenv.config();
 
 const User = require('./models/User');
@@ -18,13 +18,13 @@ async function addUserAndVendor() {
     // ✅ Then start session
     const session = await mongoose.startSession();
     session.startTransaction();
-
+    const hashedPassword = await bcrypt.hash("VendorPassword123!", 10);
     try {
       const user = await User.create(
         [
           {
-            username: 'vendorUser2',
-            passwordHash: 'hashedpassword123',
+            username: 'vendorUser3',
+            passwordHash: hashedPassword,
             role: 'vendor',
           },
         ],
@@ -35,8 +35,8 @@ async function addUserAndVendor() {
         [
           {
             user: user[0]._id,
-            businessName: 'Data Inc.',
-            businessAddress: '121 Main Street, HCMC',
+            businessName: 'Data3 Inc.',
+            businessAddress: '123 Main Street, HCMC',
           },
         ],
         { session }
