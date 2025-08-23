@@ -5,7 +5,6 @@
 // Author: Tran Huu Viet Hung
 // ID: s3975170
 const Shipper = require("../models/Shipper");
-const DistributionHub = require("../models/DistributionHub");
 
 exports.getShippers = async (req, res) => {
     try {

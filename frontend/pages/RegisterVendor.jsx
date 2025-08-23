@@ -7,10 +7,13 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../src/redux/authSlice";
 // import { authSelect } from "../redux/authSlice";
 
 export default function RegisterVendor() {
     // const user = useSelector(authSelect.user);
+    const dispatch = useDispatch();
     const [form, setForm] = useState({role: "vendor", username: "", password: "", businessName: "", businessAddress: "",});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
@@ -26,10 +29,11 @@ export default function RegisterVendor() {
         setError("");
         setSuccessMsg("");
         try {
-           const res = await axios.post("http://localhost:5000/api/auth/register", form);
+           const res = await axios.post("http://localhost:5000/api/auth/register", form, {withCredentials: true});
            setSuccessMsg(res.data.msg); // Display message from backend
 
            if (res.data.msg === "Registration successful") {
+            await dispatch(loginUser({username: form.username, password: form.password}));
             setTimeout(() => {
                 navigate("/view-products");
             }, 1000);

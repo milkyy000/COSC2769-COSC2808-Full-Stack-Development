@@ -8,33 +8,62 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Container, Form, Button, Alert } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { authSelect } from "../../src/redux/authSlice"; // ⚠️ adjust path if needed
 
 const AddProduct = () => {
-  const vendorId = "68a5876cfa3651ce38610263";
+  const user = useSelector(authSelect.user);
   const [form, setForm] = useState({
     name: "",
     price: "",
     description: "",
-    image: "",
+    image: null, // will be File
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    if (name === "image") {
+      setForm({ ...form, image: files[0] }); // store File object
+    } else {
+      setForm({ ...form, [name]: value });
+    }
+  };
 
   const handleAddProduct = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
+
+    if (!user?._id) {
+      setError("⚠️ Please log in as a vendor before adding products.");
+      return;
+    }
+
     try {
+      const data = new FormData();
+      data.append("name", form.name);
+      data.append("price", form.price);
+      data.append("description", form.description);
+      if (form.image) data.append("image", form.image);
+
       await axios.post(
-        `http://localhost:5000/api/vendors/${vendorId}/products`,
-        { ...form, price: Number(form.price) }
+        `http://localhost:5000/api/vendors/${user._id}/products`,
+        data,
+        {
+          withCredentials: true,
+          headers: { "Content-Type": "multipart/form-data" },
+        }
       );
-      setForm({ name: "", price: "", description: "", image: "" });
+
+      setForm({ name: "", price: "", description: "", image: null });
       setSuccess("✅ Product added successfully!");
     } catch (err) {
       setError(err.response?.data?.error || "Failed to add product");
     }
   };
+
 
   return (
     <Container>
@@ -53,6 +82,7 @@ const AddProduct = () => {
             required
           />
         </Form.Group>
+
         <Form.Group className="mb-3">
           <Form.Label>Price</Form.Label>
           <Form.Control
@@ -63,15 +93,16 @@ const AddProduct = () => {
             required
           />
         </Form.Group>
+
         <Form.Group className="mb-3">
-          <Form.Label>Image Filename</Form.Label>
+          <Form.Label>Upload Image</Form.Label>
           <Form.Control
-            type="text"
-            placeholder="e.g., product.jpg"
-            value={form.image}
-            onChange={(e) => setForm({ ...form, image: e.target.value })}
+            type="file"
+            accept="image/*"
+            onChange={(e) => setForm({ ...form, image: e.target.files[0] })}
           />
         </Form.Group>
+
         <Form.Group className="mb-3">
           <Form.Label>Description</Form.Label>
           <Form.Control
@@ -84,11 +115,13 @@ const AddProduct = () => {
             }
           />
         </Form.Group>
-        <Button type="submit" variant="primary">
+
+        <Button type="submit" variant="primary" disabled={!user}>
           Add Product
         </Button>
       </Form>
     </Container>
+
   );
 };
 
