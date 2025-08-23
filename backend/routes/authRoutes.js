@@ -7,9 +7,9 @@
 const express = require("express");
 const router = express.Router();
 const {register, login, logout, myAccount} = require("../controllers/authController");
-const {createCustomer, getCustomers} = require("../controllers/customerController");
-const {createVendor, getVendors} = require("../controllers/vendorController");
-const {createShipper, getShippers} = require("../controllers/shipperController");
+const {getCustomers} = require("../controllers/customerController");
+const {getVendors} = require("../controllers/vendorController");
+const {getShippers} = require("../controllers/shipperController");
 
 router.post("/register", register);
 router.post("/login", login);
@@ -17,12 +17,9 @@ router.post("/logout", logout);
 router.get("/myAccount", myAccount);
 // Customer
 router.get("/customers", getCustomers);
-router.post("/customers", createCustomer);
 // Vendor
 router.get("/vendors", getVendors);
-router.post("/vendors", createVendor);
 // Shipper
 router.get("/shippers", getShippers);
-router.post("/shippers", createShipper);
 
 module.exports = router;

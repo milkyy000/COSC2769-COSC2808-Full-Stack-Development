@@ -52,7 +52,11 @@ const authSlice = createSlice({
         state.user = action.payload;
       });
   },
+  selectors: {
+    user: state => state.user,
+  }
 });
 
 export const { logoutSuccess } = authSlice.actions;
+export const authSelect = authSlice.selectors;
 export default authSlice.reducer;

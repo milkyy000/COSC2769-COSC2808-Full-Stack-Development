@@ -34,23 +34,95 @@ export default function Login() {
         }
     };
 
+    // return (
+    //     <div>
+    //         <form onSubmit={handleSubmit}>
+    //             <input placeholder="Username" required onChange={e => setForm({...form, username: e.target.value})}/>
+    //             <input placeholder="Password" type="password" required onChange={e => setForm({...form, password: e.target.value})}/>
+    //             <button type="submit" disabled={loading}>{loading ? "Logging in..." : "Login"}</button>
+    //         </form>
+
+    //         {/* Show errors if any */}
+    //         {error && <p style={{ color: "red" }}>{error}</p>}
+    //         {/* Displayed successfully */}
+    //         {user && <p style={{color: "green"}}>Login successful! Welcome, {user.username}</p>}
+
+    //         <p>Don't have an account? <Link to="/registerCustomer">Register as Customer now!</Link></p>
+    //         <p>Don't have an account? <Link to="/registerVendor">Register as Vendor now!</Link></p>
+    //         <p>Don't have an account? <Link to="/registerShipper">Register as Shipper now!</Link></p>
+    //     </div>
+        
+        
+    // );
+
     return (
-        <div>
+    <div className="container d-flex justify-content-center align-items-center vh-100">
+      <div className="row w-100">
+        <div className="col-lg-4 col-md-6 col-sm-10 mx-auto">
+          <div className="card shadow-lg p-4">
+            <h3 className="text-center mb-4">Login</h3>
             <form onSubmit={handleSubmit}>
-                <input placeholder="Username" required onChange={e => setForm({...form, username: e.target.value})}/>
-                <input placeholder="Password" type="password" required onChange={e => setForm({...form, password: e.target.value})}/>
-                <button type="submit" disabled={loading}>{loading ? "Logging in..." : "Login"}</button>
+              <div className="mb-3">
+                <label className="form-label">Username</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Enter username"
+                  required
+                  value={form.username}
+                  onChange={(e) =>
+                    setForm({ ...form, username: e.target.value })
+                  }
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Password</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  placeholder="Enter password"
+                  required
+                  value={form.password}
+                  onChange={(e) =>
+                    setForm({ ...form, password: e.target.value })
+                  }
+                />
+              </div>
+              <button
+                type="submit"
+                className="btn btn-primary w-100"
+                disabled={loading}
+              >
+                {loading ? "Logging in..." : "Login"}
+              </button>
             </form>
 
             {/* Show errors if any */}
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            {/* Displayed successfully */}
-            {user && <p style={{color: "green"}}>Login successful! Welcome, {user.username}</p>}
+            {error && <p className="text-danger mt-3">{error}</p>}
 
-            <p>Don't have an account? <Link to="/registerCustomer">Register as Customer now!</Link></p>
-            <p>Don't have an account? <Link to="/registerVendor">Register as Vendor now!</Link></p>
-            <p>Don't have an account? <Link to="/registerShipper">Register as Shipper now!</Link></p>
+            {/* Displayed successfully */}
+            {user && (
+              <p className="text-success mt-3">
+                Login successful! Welcome, {user.username}
+              </p>
+            )}
+
+            <hr />
+            <p className="text-center mb-1">
+              Don't have an account?{" "}
+              <Link to="/registerCustomer">Register as Customer</Link>
+            </p>
+            <p className="text-center mb-1">
+              Or{" "}
+              <Link to="/registerVendor">Register as Vendor</Link>
+            </p>
+            <p className="text-center">
+              Or{" "}
+              <Link to="/registerShipper">Register as Shipper</Link>
+            </p>
+          </div>
         </div>
-        
-    );
+      </div>
+    </div>
+  );
 }

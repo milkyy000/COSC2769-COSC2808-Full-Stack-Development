@@ -11,6 +11,7 @@ const Vendor = require("../models/Vendor");
 const Shipper = require("../models/Shipper");
 const DistributionHub = require("../models/DistributionHub")
 
+// Register
 exports.register = async (req, res) => {
     const session = await User.startSession();
     session.startTransaction();
@@ -20,15 +21,43 @@ exports.register = async (req, res) => {
         // Validate username
         const usernameRegex = /^[A-Za-z0-9]{8,15}$/;
         if (!usernameRegex.test(username)) {
-            return res.status(400).json({msg: "Username must be 8–15 characters, letters and digits only"});
+            return res.status(400).json({msg: "Username must be 8-15 characters, letters and digits only"});
         }
 
-        // Validate passwor
+        // Validate password
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
         if (!passwordRegex.test(password)) {
-            return res.status(400).json({msg: "Password must be 8–20 chars, include upper, lower, digit, and special !@#$%^&*"});
+            return res.status(400).json({msg: "Password must be 8-20 chars, include upper, lower, digit, and special !@#$%^&*"});
+        }
+        // validate role-specific fields
+        async function handleValidateError(session, res, msg) {
+            await session.abortTransaction();
+            session.endSession();
+            return res.status(400).json({msg});
         }
 
+        if (role === "customer") {
+            if (!name || name.length < 5) {
+                return handleValidateError(session, res, "Customer name required, min 5 chars");
+            }
+            if (!address || address.length < 5) {
+                return handleValidateError(session, res, "Customer address required, min 5 chars");
+            }
+        }
+        else if (role === "vendor") {
+            if (!businessName || businessName.length < 5) {
+                return handleValidateError(session, res, "Business name required, min 5 chars");
+            }
+            if (!businessAddress || businessAddress.length < 5) {
+                return handleValidateError(session, res, "Business address required, min 5 chars");
+            }
+        }
+        else if (role === "shipper") {
+            if (!distributionHub) {
+                return handleValidateError(session, res, "Shipper must select a distribution hub");
+            }
+        }
+        
         // Check duplicate username
         const exist = await User.findOne({username});
         if (exist)
@@ -37,7 +66,7 @@ exports.register = async (req, res) => {
         // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Create user (add transacsion)
+        // Create user
         const newUser = new User ({role, username, passwordHash: hashedPassword, profilePicture,})
         await newUser.save({session});
 
@@ -48,16 +77,17 @@ exports.register = async (req, res) => {
         else if (role === "vendor") {
             const newVendor = new Vendor({user: newUser._id, businessName, businessAddress});
             await newVendor.save({session});
-        } else if (role === "shipper") {
+        } 
+        else if (role === "shipper") {
             const hubDoc = await DistributionHub.findOne({name: distributionHub});
-            if (!hubDoc)
-                return res.status(400).json({msg: "Distribution hub not found"})
+            if (!hubDoc) {
+                return handleValidateError(session, res, "Distribution hub not found");
+            }
             const newShipper = new Shipper({user: newUser._id, distributionHub: hubDoc._id});
             await newShipper.save({session});
         }
         await session.commitTransaction();
         session.endSession();
-
         return res.json({msg: "Registration successful", userId: newUser._id});
     } catch (err) {
         await session.abortTransaction();
@@ -67,6 +97,7 @@ exports.register = async (req, res) => {
     }
 };
 
+// Login
 exports.login = async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -84,11 +115,13 @@ exports.login = async (req, res) => {
     }
 };
 
+// Logout
 exports.logout = async (req, res) => {
     req.session.destroy();
     res.json({msg: "Logout successful"});
 };
 
+// My account
 exports.myAccount = async (req, res) => {
     if (!req.session.user)
         return res.status(401).json({msg: "Unauthorized"});

@@ -7,8 +7,10 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { authSelect } from "../redux/authSlice";
 
 export default function RegisterVendor() {
+    // const user = useSelector(authSelect.user);
     const [form, setForm] = useState({role: "vendor", username: "", password: "", businessName: "", businessAddress: "",});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
@@ -40,10 +42,10 @@ export default function RegisterVendor() {
         <div>
             <h2>Register as Vendor</h2>
             <form onSubmit={handleSubmit}>
-                <input placeholder="Username" required onChange={e => setForm({...form, username: e.target.value.trim()})}/>
-                <input placeholder="Password" required type="password" onChange={e => setForm({...form, password: e.target.value})}/>
-                <input placeholder="Business Name" required onChange={e => setForm({...form, businessName: e.target.value})}/>
-                <input placeholder="Business Address" required onChange={e => setForm({...form, businessAddress: e.target.value})}/>
+                <input placeholder="Username" onChange={e => setForm({...form, username: e.target.value.trim()})}/>
+                <input placeholder="Password" type="password" onChange={e => setForm({...form, password: e.target.value})}/>
+                <input placeholder="Business Name" onChange={e => setForm({...form, businessName: e.target.value})}/>
+                <input placeholder="Business Address" onChange={e => setForm({...form, businessAddress: e.target.value})}/>
                 <button type="submit" disabled={loading}>{loading ? "Registering..." : "Register"}</button>
             </form>
 
