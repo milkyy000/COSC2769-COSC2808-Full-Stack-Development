@@ -1,3 +1,10 @@
+// RMIT University Vietnam
+// Course: COSC2769 - Full Stack Development
+// Semester: 2025B
+// Assessment: Assignment 02
+// Author: Tran Quy Duc
+// ID: s4070049
+
 // backend/server.js
 const express = require('express');
 const mongoose = require('mongoose');
@@ -14,8 +21,13 @@ mongoose.connect(process.env.MONGO_URI)
     .catch(err => console.error(err));
 
 //-----------------------------------------------------------------------------------------------------
+//Routers//
+//-----------------------------------------------------------------------------------------------------
 
+const vendorRoutes = require('./routes/vendorRoutes');
+app.use('/api/vendors', vendorRoutes);
 
+//=====================================================================================================
 app.listen(process.env.PORT, () => {
     console.log(`🚀 Server running on port ${process.env.PORT}`);
 });
