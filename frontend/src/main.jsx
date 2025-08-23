@@ -23,16 +23,15 @@
 // ]);
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { RouterProvider } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import router from "./routes";
 import { Provider } from "react-redux";
 import store from "./store";
+import App from "./App";   
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <App />   {/* ✅ Use App so fetchMyAccount runs on reload */}
     </Provider>
   </StrictMode>
 );

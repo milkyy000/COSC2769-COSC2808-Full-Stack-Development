@@ -11,6 +11,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
+const path = require("path");
 require('dotenv').config();
 
 const app = express();
@@ -25,6 +26,10 @@ app.use(
     cookie: { httpOnly: true, secure: false, maxAge: 1000*60*60 },
   })
 );
+
+// Serve uploaded files
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)

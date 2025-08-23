@@ -5,6 +5,7 @@
 // Author: Tran Huu Viet Hung
 // ID: s3975170
 
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -115,4 +116,7 @@ export default function Login() {
             <p>Don't have an account? <Link to="/registerShipper">Register as Shipper now!</Link></p>
         </div>
   );
+        </div>
+  );
 }
+

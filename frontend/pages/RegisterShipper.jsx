@@ -6,21 +6,34 @@
 // ID: s3975170
 import { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+// import { authSelect } from "../redux/authSlice";
 
-export default function RegisterShipper() {
-    const [form, setForm] = useState({role: "shipper", username: "", password: "", distributionHub: "",});
+export default function RegisterVendor() {
+    // const user = useSelector(authSelect.user);
+    const [form, setForm] = useState({role: "vendor", username: "", password: "", businessName: "", businessAddress: "",});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
+    const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!form.username || !form.password) {
+            setError("Username and password are required");
+            return;
+        }
         setLoading(true);
         setError("");
         setSuccessMsg("");
         try {
            const res = await axios.post("http://localhost:5000/api/auth/register", form, {withCredentials: true});
            setSuccessMsg(res.data.msg); // Display message from backend
+
+           if (res.data.msg === "Registration successful") {
+            setTimeout(() => {
+                navigate("/view-products");
+            }, 1000);
+           }
         } catch (err) {
         if (err.response && err.response.data) {
             setError(err.response.data.msg); // Show errors from backend 
@@ -31,19 +44,15 @@ export default function RegisterShipper() {
         setLoading(false);
         }
     };
-    const provinces = ["Ha Noi", "Ho Chi Minh", "Đa Nang", "Hai Phong", "Can Tho", "Hue", "Nha Trang",];
 
     return (
         <div>
-            <h2>Register as Shipper</h2>
+            <h2>Register as Vendor</h2>
             <form onSubmit={handleSubmit}>
                 <input placeholder="Username" onChange={e => setForm({...form, username: e.target.value.trim()})}/>
                 <input placeholder="Password" type="password" onChange={e => setForm({...form, password: e.target.value})}/>
-                <select value={form.distributionHub} onChange={e => setForm({...form, distributionHub: e.target.value})}>
-                    <option value="">-- Select province/city --</option>
-                    {provinces.map((province) => 
-                        (<option key={province} value={province}>{province}</option>))}
-                </select>
+                <input placeholder="Business Name" onChange={e => setForm({...form, businessName: e.target.value})}/>
+                <input placeholder="Business Address" onChange={e => setForm({...form, businessAddress: e.target.value})}/>
                 <button type="submit" disabled={loading}>{loading ? "Registering..." : "Register"}</button>
             </form>
 

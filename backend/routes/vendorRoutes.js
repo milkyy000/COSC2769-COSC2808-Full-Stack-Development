@@ -8,6 +8,9 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../models/Product');
+const upload = require("../config/multer");
+const fs = require("fs");
+const path = require("path");
 
 // ✅ GET all products for a vendor
 router.get('/:vendorId/products', async (req, res) => {
@@ -20,32 +23,47 @@ router.get('/:vendorId/products', async (req, res) => {
   }
 });
 
-// ✅ POST add a new product for a vendor
-router.post('/:vendorId/products', async (req, res) => {
-  try {
-    const { name, price, description, image } = req.body;
 
-    // Validation (basic, server-side)
+// Add product with file upload
+router.post("/:vendorId/products", upload.single("image"), async (req, res) => {
+  try {
+    const { name, price, description } = req.body;
+
+    // --- Validation ---
     if (!name || name.length < 10 || name.length > 20) {
-      return res.status(400).json({ error: 'Product name must be 10–20 characters' });
+      if (req.file) fs.unlinkSync(path.join("uploads", req.file.filename));
+      return res.status(400).json({ error: "Product name must be 10–20 characters" });
     }
     if (!price || price <= 0) {
-      return res.status(400).json({ error: 'Price must be a positive number' });
+      if (req.file) fs.unlinkSync(path.join("uploads", req.file.filename));
+      return res.status(400).json({ error: "Price must be a positive number" });
     }
 
+    // --- Create Product ---
     const product = new Product({
       vendor: req.params.vendorId,
       name,
       price,
       description,
-      image
+      image: req.file ? req.file.filename : null, // ✅ only save filename
     });
 
     await product.save();
     res.status(201).json(product);
+
   } catch (err) {
-    console.error('❌ Failed to add product:', err);
-    res.status(400).json({ error: 'Failed to add product' });
+    console.error("❌ Failed to add product:", err);
+
+    // cleanup file if error occurs
+    if (req.file) {
+      try {
+        fs.unlinkSync(path.join("uploads", req.file.filename));
+      } catch (unlinkErr) {
+        console.error("⚠️ Failed to delete file:", unlinkErr);
+      }
+    }
+
+    res.status(500).json({ error: "Failed to add product" });
   }
 });
 
