@@ -88,7 +88,8 @@ exports.register = async (req, res) => {
         }
         await session.commitTransaction();
         session.endSession();
-        return res.json({msg: "Registration successful", userId: newUser._id});
+        req.session.user = {id: newUser._id, username: newUser.username, role: newUser.role};
+        return res.json({msg: "Registration successful", user: req.session.user});
     } catch (err) {
         await session.abortTransaction();
         session.endSession();

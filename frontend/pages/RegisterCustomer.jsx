@@ -19,7 +19,7 @@ export default function RegisterCustomer() {
         setError("");
         setSuccessMsg("");
         try {
-           const res = await axios.post("http://localhost:5000/api/auth/register", form);
+           const res = await axios.post("http://localhost:5000/api/auth/register", form, {withCredentials: true});
            setSuccessMsg(res.data.msg); // Display message from backend
         } catch (err) {
         if (err.response && err.response.data) {

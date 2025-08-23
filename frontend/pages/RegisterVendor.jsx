@@ -26,7 +26,7 @@ export default function RegisterVendor() {
         setError("");
         setSuccessMsg("");
         try {
-           const res = await axios.post("http://localhost:5000/api/auth/register", form);
+           const res = await axios.post("http://localhost:5000/api/auth/register", form, {withCredentials: true});
            setSuccessMsg(res.data.msg); // Display message from backend
 
            if (res.data.msg === "Registration successful") {
