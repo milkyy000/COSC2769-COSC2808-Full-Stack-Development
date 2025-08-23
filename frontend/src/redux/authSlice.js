@@ -23,9 +23,13 @@ export const fetchMyAccount = createAsyncThunk("auth/myAccount", async () => {
   return res.data;
 });
 
+const initialState = {
+  user: JSON.parse(localStorage.getItem("user")) || null, // persist login
+};
+
 const authSlice = createSlice({
   name: "auth",
-  initialState: { user: null, loading: false, error: null },
+  initialState: { user: null, loading: false, error: null, initialized: false },
   reducers: {
     logoutSuccess: (state) => {
       state.user = null;
@@ -48,13 +52,25 @@ const authSlice = createSlice({
         state.error = action.error.message;
       })
       // fetchMyAccount
+      .addCase(fetchMyAccount.pending, (state) => {
+        state.loading = true;
+      })
       .addCase(fetchMyAccount.fulfilled, (state, action) => {
+        state.loading = false;
         state.user = action.payload;
+        state.initialized = true; // ✅ finished session check
+      })
+      .addCase(fetchMyAccount.rejected, (state) => {
+        state.loading = false;
+        state.user = null;
+        state.initialized = true; // ✅ still mark as finished
       });
   },
   selectors: {
-    user: state => state.user,
-  }
+    user: (state) => state.user,
+    loading: (state) => state.loading,
+    initialized: (state) => state.initialized,
+  },
 });
 
 export const { logoutSuccess } = authSlice.actions;
