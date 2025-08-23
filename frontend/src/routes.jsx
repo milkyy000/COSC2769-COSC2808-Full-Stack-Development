@@ -11,7 +11,7 @@ import RegisterShipper from "../pages/RegisterShipper";
 import MyAccount from "../pages/MyAccount";
 
 
-const router = createBrowserRouter([
+const Router = createBrowserRouter([
   { path: "/", element: <Login /> },
   { path: "/registerCustomer", element: <RegisterCustomer /> },
   { path: "/registerVendor", element: <RegisterVendor /> },
@@ -54,4 +54,4 @@ const router = createBrowserRouter([
   { path: "*", element: <NotFound /> },
 ]);
 
-export default router;
+export default Router;

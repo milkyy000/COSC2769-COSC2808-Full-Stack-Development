@@ -26,12 +26,14 @@ import { createRoot } from "react-dom/client";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Provider } from "react-redux";
 import store from "./store";
-import App from "./App";   
+import App from "./App";
+import Router from "./routes";
+import { RouterProvider } from "react-router-dom";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
-      <App />   {/* ✅ Use App so fetchMyAccount runs on reload */}
+      <RouterProvider router={Router} />   {/* ✅ Use App so fetchMyAccount runs on reload */}
     </Provider>
   </StrictMode>
 );

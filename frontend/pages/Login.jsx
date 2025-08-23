@@ -116,7 +116,5 @@ export default function Login() {
             <p>Don't have an account? <Link to="/registerShipper">Register as Shipper now!</Link></p>
         </div>
   );
-        </div>
-  );
 }
 
