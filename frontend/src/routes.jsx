@@ -9,7 +9,7 @@ import RegisterCustomer from "../pages/RegisterCustomer";
 import RegisterVendor from "../pages/RegisterVendor";
 import RegisterShipper from "../pages/RegisterShipper";
 import MyAccount from "../pages/MyAccount";
-import ProtectedRoute from "./components/ProtectedRoute"; // ✅ import
+
 
 const router = createBrowserRouter([
   { path: "/", element: <Login /> },
@@ -30,22 +30,22 @@ const router = createBrowserRouter([
   {
     path: "/view-products",
     element: (
-      <ProtectedRoute role="vendor">
+     
         <Layout>
           <ViewMyProducts />
         </Layout>
-      </ProtectedRoute>
+   
     ),
     errorElement: <NotFound />,
   },
   {
     path: "/add-product",
     element: (
-      <ProtectedRoute role="vendor">
+      
         <Layout>
           <AddProduct />
         </Layout>
-      </ProtectedRoute>
+  
     ),
     errorElement: <NotFound />,
   },
