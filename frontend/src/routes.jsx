@@ -10,12 +10,27 @@ import NotFound from "../pages/NotFound";
 import ViewMyProducts from "../pages/Vendor/ViewMyProducts";
 import AddProduct from "../pages/Vendor/AddProduct";
 import Layout from "../components/Vendor/Layout";
+import Login from "../pages/Login";
+import RegisterCustomer from "../pages/RegisterCustomer";
+import RegisterVendor from "../pages/RegisterVendor";
+import RegisterShipper from "../pages/RegisterShipper";
+import MyAccount from "../pages/MyAccount";
 
 const router = createBrowserRouter([
+  {path: "/", element: <Login />,},
+  {path: "/registerCustomer", element: <RegisterCustomer/>,},
+  {path: "/registerVendor", element: <RegisterVendor/>,},
+  {path: "/registerShipper", element: <RegisterShipper/>,},
   {
-    path: "/",
-    element: <Navigate to="/view-products" replace />,
+    path: "/my-account",
+    element: (
+      <Layout>
+        <MyAccount/>
+      </Layout>
+      ),
+    errorElement: <NotFound/>,
   },
+
   {
     path: "/view-products",
     element: (

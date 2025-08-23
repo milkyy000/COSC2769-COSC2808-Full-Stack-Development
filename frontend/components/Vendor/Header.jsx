@@ -6,10 +6,22 @@
 // ID: s4070049
 
 import React from "react";
+import axios from "axios";
 import { Navbar, Container, Nav } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = async() => {
+    try {
+      await axios.post("http://localhost:5000/api/auth/logout", {}, { withCredentials: true });
+      localStorage.removeItem("user");
+      navigate("/")
+    } catch (err) {
+      console.error("Logout error:", err)
+    }
+  };
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container>
@@ -23,8 +35,8 @@ const Header = () => {
             <Nav.Link as={NavLink} to="/add-product">
               Add New Product
             </Nav.Link>
-            <Nav.Link href="#">My Account</Nav.Link>
-            <Nav.Link href="#">Logout</Nav.Link>
+            <Nav.Link as={NavLink} to="/my-account">My Account</Nav.Link>
+            <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
