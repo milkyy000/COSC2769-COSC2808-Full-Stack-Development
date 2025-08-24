@@ -8,7 +8,8 @@ import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { loginUser } from "../src/redux/authSlice";
+import { fetchMyAccount, registerUser } from "../src/redux/authSlice";
+// import { registerUser } from "../src/redux/authSlice";
 // import { authSelect } from "../redux/authSlice";
 
 export default function RegisterVendor() {
@@ -28,25 +29,41 @@ export default function RegisterVendor() {
         setLoading(true);
         setError("");
         setSuccessMsg("");
-        try {
-           const res = await axios.post("http://localhost:5000/api/auth/register", form, {withCredentials: true});
-           setSuccessMsg(res.data.msg); // Display message from backend
+        // try {
+        //    const res = await axios.post("http://localhost:5000/api/auth/register", form, {withCredentials: true});
+        //    setSuccessMsg(res.data.msg); // Display message from backend
 
-           if (res.data.msg === "Registration successful") {
-            await dispatch(loginUser({username: form.username, password: form.password}));
-            setTimeout(() => {
-                navigate("/view-products");
-            }, 1000);
-           }
+        //    if (res.data.msg === "Registration successful") {
+        //     await dispatch(loginUser({username: form.username, password: form.password}));
+        //     setTimeout(() => {
+        //         navigate("/view-products");
+        //     }, 1000);
+        //    }
+        // } catch (err) {
+        // if (err.response && err.response.data) {
+        //     setError(err.response.data.msg); // Show errors from backend 
+        // } else {
+        //     setError("Network error: " + err.message);
+        // }
+        // } finally {
+        // setLoading(false);
+        // }
+
+        try {
+            const res = await dispatch(registerUser(form)).unwrap();
+            setSuccessMsg(res.msg);
+
+            if (res.msg === "Registration successful") {
+                setTimeout(() => {
+                    navigate("/view-products");
+                }, 1000);
+            }
         } catch (err) {
-        if (err.response && err.response.data) {
-            setError(err.response.data.msg); // Show errors from backend 
-        } else {
-            setError("Network error: " + err.message);
-        }
+            setError(err);
         } finally {
-        setLoading(false);
+            setLoading(false);
         }
+        await dispatch(fetchMyAccount()).unwrap();
     };
 
     return (

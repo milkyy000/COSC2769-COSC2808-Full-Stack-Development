@@ -7,6 +7,21 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+// Register API
+export const registerUser = createAsyncThunk(
+  "auth/register",
+  async (data, { rejectWithValue }) => {
+    try {
+      const res = await axios.post("http://localhost:5000/api/auth/register", data, {
+        withCredentials: true,
+      });
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.msg || "Register failed");
+    }
+  }
+);
+
 // 🔹 Login API
 export const loginUser = createAsyncThunk(
   "auth/login",
@@ -57,6 +72,24 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // register
+      .addCase(registerUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.user;
+        state.successMsg = action.payload.msg;
+        state.initialized = true;
+        // persist register
+        localStorage.setItem("user", JSON.stringify(action.payload.user));
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || "Register failed";
+      })
+
       // Login
       .addCase(loginUser.pending, (state) => {
         state.loading = true;

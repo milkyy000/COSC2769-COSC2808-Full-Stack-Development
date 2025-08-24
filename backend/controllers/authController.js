@@ -88,8 +88,31 @@ exports.register = async (req, res) => {
         }
         await session.commitTransaction();
         session.endSession();
-        req.session.user = {id: newUser._id, username: newUser.username, role: newUser.role};
-        return res.json({msg: "Registration successful", user: req.session.user});
+
+        let extra = {};
+if (role === "customer") {
+    extra = { name, address };
+} else if (role === "vendor") {
+    extra = { businessName, businessAddress };
+} else if (role === "shipper") {
+    const hubDoc = await DistributionHub.findOne({ name: distributionHub });
+    if (hubDoc) {
+        extra = { distributionHub: hubDoc.name };
+    }
+}
+
+const userResponse = {
+    id: newUser._id,
+    username: newUser.username,
+    role: newUser.role,
+    ...extra
+};
+
+req.session.user = userResponse;
+return res.json({ msg: "Registration successful", user: userResponse });
+
+        // req.session.user = {id: newUser._id, username: newUser.username, role: newUser.role};
+        // return res.json({msg: "Registration successful", user: req.session.user});
     } catch (err) {
         await session.abortTransaction();
         session.endSession();
