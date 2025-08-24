@@ -82,7 +82,7 @@ const ViewMyProducts = () => {
             <Card>
               <Card.Img
                 variant="top border"
-                src={`http://localhost:5000${product.image || "/uploads/default.png"}`}
+                src={`http://localhost:5000/uploads/${product.image || "/uploads/default.png"}`}
                 style={{ height: "180px", objectFit: "cover" }}
               />
               <Card.Body>
