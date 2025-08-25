@@ -1,24 +1,35 @@
-// RMIT University Vietnam
-// Course: COSC2769 - Full Stack Development
-// Semester: 2025B
-// Assessment: Assignment 02
-// Author: Tran Quy Duc
-// ID: s4070049
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Button,
+  Modal,
+  Form,
+} from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { authSelect } from "../../src/redux/authSlice"; // ⚠️ adjust path if needed
+import { authSelect } from "../../src/redux/authSlice";
 
 const ViewMyProducts = () => {
-  const user = useSelector(authSelect.user); // ✅ get logged-in user from Redux
+  const user = useSelector(authSelect.user);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  // modal state
+  const [showModal, setShowModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [formData, setFormData] = useState({
+    name: "",
+    price: "",
+    description: "",
+    image: null,
+  });
+
   const fetchProducts = async () => {
-    if (!user?._id) return; // wait until user is loaded
+    if (!user?._id) return;
     setLoading(true);
     setError("");
     try {
@@ -35,16 +46,54 @@ const ViewMyProducts = () => {
     }
   };
 
-  const handleUpdateProduct = async (productId) => {
-    const newName = prompt("Enter new name (10-20 chars):");
-    if (!newName) return;
+  const handleOpenModal = (product) => {
+    setSelectedProduct(product);
+    setFormData({
+      name: product.name,
+      price: product.price,
+      description: product.description || "",
+      image: null,
+    });
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedProduct(null);
+    setFormData({ name: "", price: "", description: "", image: null });
+  };
+
+  const handleFormChange = (e) => {
+    const { name, value, files } = e.target;
+    if (name === "image") {
+      setFormData({ ...formData, image: files[0] });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
+
+  const handleUpdateProduct = async () => {
+    if (!selectedProduct) return;
     try {
+      const formDataToSend = new FormData();
+      formDataToSend.append("name", formData.name);
+      formDataToSend.append("price", formData.price);
+      formDataToSend.append("description", formData.description);
+      if (formData.image) {
+        formDataToSend.append("image", formData.image);
+      }
+
       await axios.put(
-        `http://localhost:5000/api/vendors/${user._id}/products/${productId}`,
-        { ...products.find((p) => p._id === productId), name: newName },
-        { withCredentials: true }
+        `http://localhost:5000/api/vendors/${user._id}/products/${selectedProduct._id}`,
+        formDataToSend,
+        {
+          withCredentials: true,
+          headers: { "Content-Type": "multipart/form-data" },
+        }
       );
+
       fetchProducts();
+      handleCloseModal();
     } catch (err) {
       alert(err.response?.data?.error || "Failed to update product");
     }
@@ -65,7 +114,7 @@ const ViewMyProducts = () => {
 
   useEffect(() => {
     fetchProducts();
-  }, [user]); // ✅ re-run when user is available
+  }, [user]);
 
   if (!user) {
     return <p style={{ color: "red" }}>⚠️ Please log in as a vendor to view your products.</p>;
@@ -95,7 +144,7 @@ const ViewMyProducts = () => {
                 <Button
                   variant="warning"
                   size="sm"
-                  onClick={() => handleUpdateProduct(product._id)}
+                  onClick={() => handleOpenModal(product)}
                 >
                   ✏️ Edit
                 </Button>{" "}
@@ -111,9 +160,58 @@ const ViewMyProducts = () => {
           </Col>
         ))}
       </Row>
-      {!loading && products.length === 0 && (
-        <p>No products found. Try adding some!</p>
-      )}
+      {!loading && products.length === 0 && <p>No products found. Try adding some!</p>}
+
+      {/* Update Product Modal */}
+      <Modal show={showModal} onHide={handleCloseModal} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Update Product</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Name (10–20 chars)</Form.Label>
+              <Form.Control
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleFormChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Price</Form.Label>
+              <Form.Control
+                type="number"
+                name="price"
+                value={formData.price}
+                onChange={handleFormChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                as="textarea"
+                name="description"
+                value={formData.description}
+                onChange={handleFormChange}
+                rows={3}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Image</Form.Label>
+              <Form.Control type="file" name="image" onChange={handleFormChange} />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={handleUpdateProduct}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };

@@ -52,6 +52,26 @@ export const fetchMyAccount = createAsyncThunk(
   }
 );
 
+// 🔹 Update Profile API
+export const updateProfile = createAsyncThunk(
+  "auth/updateProfile",
+  async ({ id, formData }, { rejectWithValue }) => {
+    try {
+      const res = await axios.put(
+        `http://localhost:5000/api/users/${id}`,
+        formData,
+        {
+          withCredentials: true,
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+      return res.data.user; // our backend sends { message, user }
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.error || "Update failed");
+    }
+  }
+);
+
 // 🔹 Persisted state
 const initialState = {
   user: JSON.parse(localStorage.getItem("user")) || null,
@@ -72,6 +92,24 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // Update Profile
+      .addCase(updateProfile.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateProfile.fulfilled, (state, action) => {
+        state.loading = false;
+
+        // 🔹 Merge update instead of replacing everything
+        state.user = { ...state.user, ...action.payload };
+
+        // 🔹 Persist updated user in localStorage
+        localStorage.setItem("user", JSON.stringify(state.user));
+      })
+      .addCase(updateProfile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || "Update failed";
+      })
       // register
       .addCase(registerUser.pending, (state) => {
         state.loading = true;

@@ -16,24 +16,24 @@ exports.register = async (req, res) => {
     const session = await User.startSession();
     session.startTransaction();
     try {
-        const { role, username, password, profilePicture, name, address, businessName, businessAddress, distributionHub} = req.body;
+        const { role, username, password, profilePicture, name, address, businessName, businessAddress, distributionHub } = req.body;
 
         // Validate username
         const usernameRegex = /^[A-Za-z0-9]{8,15}$/;
         if (!usernameRegex.test(username)) {
-            return res.status(400).json({msg: "Username must be 8-15 characters, letters and digits only"});
+            return res.status(400).json({ msg: "Username must be 8-15 characters, letters and digits only" });
         }
 
         // Validate password
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
         if (!passwordRegex.test(password)) {
-            return res.status(400).json({msg: "Password must be 8-20 chars, include upper, lower, digit, and special !@#$%^&*"});
+            return res.status(400).json({ msg: "Password must be 8-20 chars, include upper, lower, digit, and special !@#$%^&*" });
         }
         // validate role-specific fields
         async function handleValidateError(session, res, msg) {
             await session.abortTransaction();
             session.endSession();
-            return res.status(400).json({msg});
+            return res.status(400).json({ msg });
         }
 
         if (role === "customer") {
@@ -57,59 +57,65 @@ exports.register = async (req, res) => {
                 return handleValidateError(session, res, "Shipper must select a distribution hub");
             }
         }
-        
+
         // Check duplicate username
-        const exist = await User.findOne({username});
+        const exist = await User.findOne({ username });
         if (exist)
-            return res.status(400).json({msg: "Username already exists"});
+            return res.status(400).json({ msg: "Username already exists" });
 
         // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
+        // ✅ Set default profile picture if none provided
+        const finalProfilePicture = profilePicture && profilePicture.trim() !== ""
+            ? profilePicture
+            : "default.png";
+
         // Create user
-        const newUser = new User ({role, username, passwordHash: hashedPassword, profilePicture,})
-        await newUser.save({session});
+        const newUser = new User({ role, username, passwordHash: hashedPassword, profilePicture: finalProfilePicture, })
+        await newUser.save({ session });
 
         if (role === "customer") {
-            const newCustomer = new Customer({user: newUser._id, name, address});
-            await newCustomer.save({session});
+            const newCustomer = new Customer({ user: newUser._id, name, address });
+            await newCustomer.save({ session });
         }
         else if (role === "vendor") {
-            const newVendor = new Vendor({user: newUser._id, businessName, businessAddress});
-            await newVendor.save({session});
-        } 
+            const newVendor = new Vendor({ user: newUser._id, businessName, businessAddress });
+            await newVendor.save({ session });
+        }
         else if (role === "shipper") {
-            const hubDoc = await DistributionHub.findOne({name: distributionHub});
+            const hubDoc = await DistributionHub.findOne({ name: distributionHub });
             if (!hubDoc) {
                 return handleValidateError(session, res, "Distribution hub not found");
             }
-            const newShipper = new Shipper({user: newUser._id, distributionHub: hubDoc._id});
-            await newShipper.save({session});
+            const newShipper = new Shipper({ user: newUser._id, distributionHub: hubDoc._id });
+            await newShipper.save({ session });
         }
         await session.commitTransaction();
         session.endSession();
 
         let extra = {};
-if (role === "customer") {
-    extra = { name, address };
-} else if (role === "vendor") {
-    extra = { businessName, businessAddress };
-} else if (role === "shipper") {
-    const hubDoc = await DistributionHub.findOne({ name: distributionHub });
-    if (hubDoc) {
-        extra = { distributionHub: hubDoc.name };
-    }
-}
+        if (role === "customer") {
+            extra = { name, address };
+        } else if (role === "vendor") {
+            extra = { businessName, businessAddress };
+        } else if (role === "shipper") {
+            const hubDoc = await DistributionHub.findOne({ name: distributionHub });
+            if (hubDoc) {
+                extra = { distributionHub: hubDoc.name };
+            }
+        }
 
-const userResponse = {
-    id: newUser._id,
-    username: newUser.username,
-    role: newUser.role,
-    ...extra
-};
+        const userResponse = {
+            id: newUser._id,
+            username: newUser.username,
+            role: newUser.role,
+            profilePicture: newUser.profilePicture,
+            ...extra
+        };
 
-req.session.user = userResponse;
-return res.json({ msg: "Registration successful", user: userResponse });
+        req.session.user = userResponse;
+        return res.json({ msg: "Registration successful", user: userResponse });
 
         // req.session.user = {id: newUser._id, username: newUser.username, role: newUser.role};
         // return res.json({msg: "Registration successful", user: req.session.user});
@@ -117,7 +123,7 @@ return res.json({ msg: "Registration successful", user: userResponse });
         await session.abortTransaction();
         session.endSession();
         console.error("Register error:", err);
-        return res.status(500).json({msg: "Server error"});
+        return res.status(500).json({ msg: "Server error" });
     }
 };
 
@@ -142,27 +148,27 @@ exports.login = async (req, res) => {
 // Logout
 exports.logout = async (req, res) => {
     req.session.destroy();
-    res.json({msg: "Logout successful"});
+    res.json({ msg: "Logout successful" });
 };
 
 // My account
 exports.myAccount = async (req, res) => {
     if (!req.session.user)
-        return res.status(401).json({msg: "Unauthorized"});
+        return res.status(401).json({ msg: "Unauthorized" });
     const user = await User.findById(req.session.user.id).select("-passwordHash");
     let extra = {};
     if (user.role === "customer") {
-        const customer = await Customer.findOne({user: user._id});
-        if (customer) extra = {name: customer.name, address: customer.address};
+        const customer = await Customer.findOne({ user: user._id });
+        if (customer) extra = { name: customer.name, address: customer.address };
     }
     else if (user.role === "vendor") {
-        const vendor = await Vendor.findOne({user: user._id});
-        if (vendor) extra = {businessName: vendor.businessName, businessAddress: vendor.businessAddress};
+        const vendor = await Vendor.findOne({ user: user._id });
+        if (vendor) extra = { businessName: vendor.businessName, businessAddress: vendor.businessAddress };
     }
     else if (user.role === "shipper") {
-        const shipper = await Shipper.findOne({user: user._id}).populate("distributionHub");
-        if (shipper) extra = {distributionHub: shipper.distributionHub.name};
+        const shipper = await Shipper.findOne({ user: user._id }).populate("distributionHub");
+        if (shipper) extra = { distributionHub: shipper.distributionHub.name };
     }
-    console.log("MyAccount response:", {...user.toObject(), ...extra});
-    res.json({...user.toObject(), ...extra});
+    console.log("MyAccount response:", { ...user.toObject(), ...extra });
+    res.json({ ...user.toObject(), ...extra });
 };

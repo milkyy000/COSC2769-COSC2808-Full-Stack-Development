@@ -45,6 +45,9 @@ app.use("/api/auth", authRoutes);
 const vendorRoutes = require('./routes/vendorRoutes');
 app.use('/api/vendors', vendorRoutes);
 
+const usersRoutes = require('./routes/users');
+app.use('/api/users', usersRoutes);
+
 //=====================================================================================================
 app.listen(process.env.PORT, () => {
     console.log(`🚀 Server running on port ${process.env.PORT}`);
