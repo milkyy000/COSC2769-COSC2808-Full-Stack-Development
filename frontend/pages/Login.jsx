@@ -1,3 +1,10 @@
+// RMIT University Vietnam
+// Course: COSC2769 - Full Stack Development
+// Semester: 2025B
+// Assessment: Assignment 02
+// Author: Tran Huu Viet Hung
+// ID: s3975170
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
