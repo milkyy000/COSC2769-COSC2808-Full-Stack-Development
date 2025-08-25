@@ -6,31 +6,43 @@
 // ID: s3975170
 
 import { useState } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { fetchMyAccount, registerUser } from "../src/redux/authSlice";
 
 export default function RegisterShipper() {
+    const dispatch = useDispatch();
     const [form, setForm] = useState({role: "shipper", username: "", password: "", distributionHub: "",});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
+    const navigate = useNavigate();
+
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        setError("");
-        setSuccessMsg("");
-        try {
-           const res = await axios.post("http://localhost:5000/api/auth/register", form);
-           setSuccessMsg(res.data.msg); // Display message from backend
-        } catch (err) {
-        if (err.response && err.response.data) {
-            setError(err.response.data.msg); // Show errors from backend 
-        } else {
-            setError("Network error: " + err.message);
+    e.preventDefault();
+    if (!form.username || !form.password) {
+      setError("Username and password are required");
+      return;
+    }
+    setLoading(true);
+    setError("");
+    setSuccessMsg("");
+
+    try {
+        const res = await dispatch(registerUser(form)).unwrap();
+        setSuccessMsg(res.msg);
+
+        if (res.msg === "Registration successful") {
+        setTimeout(() => {
+          navigate("/view-products");
+        }, 1000);
         }
+        } catch (err) {
+        setError(err);
         } finally {
         setLoading(false);
         }
+        await dispatch(fetchMyAccount()).unwrap();
     };
     const provinces = ["Ha Noi", "Ho Chi Minh", "Đa Nang", "Hai Phong", "Can Tho", "Hue", "Nha Trang",];
 
