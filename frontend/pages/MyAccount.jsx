@@ -1,3 +1,4 @@
+// MyAccount.jsx
 import { useDispatch, useSelector } from "react-redux";
 import { authSelect, updateProfile } from "../src/redux/authSlice";
 import { useState } from "react";
@@ -11,6 +12,7 @@ import {
   Col,
   Image,
 } from "react-bootstrap";
+import "./css/MyAccount.css";
 
 export default function MyAccount() {
   const user = useSelector(authSelect.user);
@@ -22,19 +24,10 @@ export default function MyAccount() {
   const [formData, setFormData] = useState({});
   const [profilePic, setProfilePic] = useState(null);
 
-  if (loading && !initialized) {
-    return <p>Loading...</p>;
-  }
+  if (loading && !initialized) return <p>Loading...</p>;
+  if (!loading && !user && initialized) return <p>You are not logged in.</p>;
+  if (!user) return <p>Loading user data...</p>;
 
-  if (!loading && !user && initialized) {
-    return <p>You are not logged in.</p>;
-  }
-
-  if (!user) {
-    return <p>Loading user data...</p>; // fallback, should not happen
-  }
-
-  // ✅ Open modal with current user data
   const handleEdit = () => {
     setFormData({
       username: user.username || "",
@@ -54,15 +47,12 @@ export default function MyAccount() {
     }
   };
 
-  // ✅ Dispatch Redux thunk instead of axios + reload
   const handleSave = async () => {
     const formDataToSend = new FormData();
     for (const key in formData) {
       formDataToSend.append(key, formData[key]);
     }
-    if (profilePic) {
-      formDataToSend.append("profilePic", profilePic);
-    }
+    if (profilePic) formDataToSend.append("profilePic", profilePic);
 
     try {
       await dispatch(updateProfile({ id: user._id, formData: formDataToSend }));
@@ -74,89 +64,42 @@ export default function MyAccount() {
   };
 
   return (
-    <Container className="mt-5">
+    <Container className="myaccount-background py-5">
       <Row className="justify-content-center">
         <Col md={8} lg={6}>
-          <Card className="shadow-lg rounded-4 overflow-hidden">
-            {/* ✅ Cover Banner */}
-            <div
-              style={{
-                background:
-                  "linear-gradient(135deg, #4e73df, #1cc88a, #36b9cc)",
-                height: "150px",
-                position: "relative",
-              }}
-            >
-              {/* Profile picture over banner */}
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: "-60px",
-                  left: "20px",
-                }}
-              >
-                <Image
-                  src={`http://localhost:5000/uploads/${
-                    user.profilePicture || "default.png"
-                  }`}
-                  roundedCircle
-                  style={{
-                    width: "120px",
-                    height: "120px",
-                    objectFit: "cover",
-                    border: "4px solid white",
-                  }}
-                />
-              </div>
+          <Card className="myaccount-card shadow-lg rounded-4">
+            {/* Banner */}
+            <div className="myaccount-banner">
+              <Image
+                src={`http://localhost:5000/uploads/${user.profilePicture || "default.png"}`}
+                className="myaccount-profile-pic"
+              />
             </div>
 
-            <Card.Body className="pt-5">
-              <h2 className="text-center mb-4">My Account</h2>
+            <Card.Body className="myaccount-body text-center">
+              <h2 className="myaccount-title mb-4">My Account</h2>
 
-              <Row className="mt-3">
+              <Row className="mt-3 text-start">
                 <Col xs={12}>
-                  <p>
-                    <strong>Role:</strong> {user.role}
-                  </p>
-                  <p>
-                    <strong>Username:</strong> {user.username}
-                  </p>
-                  {user.name && (
-                    <p>
-                      <strong>Name:</strong> {user.name}
-                    </p>
-                  )}
-                  {user.businessName && (
-                    <p>
-                      <strong>Business Name:</strong> {user.businessName}
-                    </p>
-                  )}
-                  {user.businessAddress && (
-                    <p>
-                      <strong>Business Address:</strong> {user.businessAddress}
-                    </p>
-                  )}
-                  {user.distributionHub && (
-                    <p>
-                      <strong>Hub:</strong> {user.distributionHub}
-                    </p>
-                  )}
+                  <p><strong>Role:</strong> {user.role}</p>
+                  <p><strong>Username:</strong> {user.username}</p>
+                  {user.name && <p><strong>Name:</strong> {user.name}</p>}
+                  {user.businessName && <p><strong>Business Name:</strong> {user.businessName}</p>}
+                  {user.businessAddress && <p><strong>Business Address:</strong> {user.businessAddress}</p>}
+                  {user.distributionHub && <p><strong>Hub:</strong> {user.distributionHub}</p>}
                 </Col>
               </Row>
 
-              {/* Action button row */}
-              <div className="text-center mt-4">
-                <Button variant="primary" onClick={handleEdit}>
-                  ✏️ Edit Profile
-                </Button>
-              </div>
+              <Button variant="primary" className="myaccount-btn mt-3" onClick={handleEdit}>
+                ✏️ Edit Profile
+              </Button>
             </Card.Body>
           </Card>
         </Col>
       </Row>
 
-      {/* ✅ Edit Account Modal */}
-      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+      {/* Edit Modal */}
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered className="myaccount-modal">
         <Modal.Header closeButton>
           <Modal.Title>Edit My Account</Modal.Title>
         </Modal.Header>
@@ -164,23 +107,24 @@ export default function MyAccount() {
           <Form>
             {Object.keys(formData).map((key) => (
               <Form.Group className="mb-3" key={key}>
-                <Form.Label>
-                  {key.charAt(0).toUpperCase() + key.slice(1)}
-                </Form.Label>
+                <Form.Label>{key.charAt(0).toUpperCase() + key.slice(1)}</Form.Label>
                 <Form.Control
                   type="text"
                   name={key}
                   value={formData[key]}
                   onChange={handleChange}
+                  className="myaccount-form-input"
                 />
               </Form.Group>
             ))}
+
             <Form.Group className="mb-3">
               <Form.Label>Profile Picture</Form.Label>
               <Form.Control
                 type="file"
                 name="profilePic"
                 onChange={handleChange}
+                className="myaccount-form-input"
               />
             </Form.Group>
           </Form>

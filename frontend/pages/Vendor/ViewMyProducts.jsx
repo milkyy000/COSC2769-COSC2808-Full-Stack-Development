@@ -11,6 +11,7 @@ import {
 } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { authSelect } from "../../src/redux/authSlice";
+import "../css/ViewMyProducts.css";
 
 const ViewMyProducts = () => {
   const user = useSelector(authSelect.user);
@@ -128,11 +129,10 @@ const ViewMyProducts = () => {
       <Row>
         {products.map((product) => (
           <Col xs={12} md={6} lg={4} key={product._id} className="mb-4">
-            <Card>
+            <Card className="product-card">
               <Card.Img
-                variant="top border"
-                src={`http://localhost:5000/uploads/${product.image || "/uploads/default.png"}`}
-                style={{ height: "180px", objectFit: "cover" }}
+                src={`http://localhost:5000/uploads/${product.image || "default.png"}`}
+                alt={product.name}
               />
               <Card.Body>
                 <Card.Title>{product.name}</Card.Title>
@@ -144,13 +144,15 @@ const ViewMyProducts = () => {
                 <Button
                   variant="warning"
                   size="sm"
+                  className="product-btn me-2"
                   onClick={() => handleOpenModal(product)}
                 >
                   ✏️ Edit
-                </Button>{" "}
+                </Button>
                 <Button
                   variant="danger"
                   size="sm"
+                  className="product-btn"
                   onClick={() => handleDeleteProduct(product._id)}
                 >
                   🗑 Delete
@@ -158,6 +160,7 @@ const ViewMyProducts = () => {
               </Card.Body>
             </Card>
           </Col>
+
         ))}
       </Row>
       {!loading && products.length === 0 && <p>No products found. Try adding some!</p>}

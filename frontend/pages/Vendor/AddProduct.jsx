@@ -10,6 +10,7 @@ import axios from "axios";
 import { Container, Form, Button, Alert } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { authSelect } from "../../src/redux/authSlice"; // ⚠️ adjust path if needed
+import "../css/AddProduct.css"
 
 const AddProduct = () => {
   const user = useSelector(authSelect.user);
@@ -41,12 +42,17 @@ const AddProduct = () => {
       return;
     }
 
+    if (!form.image) {
+      setError("⚠️ Product image is required.");
+      return;
+    }
+
     try {
       const data = new FormData();
       data.append("name", form.name);
       data.append("price", form.price);
       data.append("description", form.description);
-      if (form.image) data.append("image", form.image);
+      data.append("image", form.image);
 
       await axios.post(
         `http://localhost:5000/api/vendors/${user._id}/products`,
@@ -65,62 +71,69 @@ const AddProduct = () => {
   };
 
 
+
   return (
-    <Container>
-      <h2>➕ Add New Product</h2>
-      {error && <Alert variant="danger">{error}</Alert>}
-      {success && <Alert variant="success">{success}</Alert>}
+    <Container className="add-product-background">
+      <div className="add-product-card">
+        <h2 className="add-product-title">➕ Add New Product</h2>
 
-      <Form onSubmit={handleAddProduct}>
-        <Form.Group className="mb-3">
-          <Form.Label>Product Name</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter name (10–20 chars)"
-            value={form.name}
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
-            required
-          />
-        </Form.Group>
+        {error && <div className="add-product-error">{error}</div>}
+        {success && <div className="add-product-success">{success}</div>}
 
-        <Form.Group className="mb-3">
-          <Form.Label>Price</Form.Label>
-          <Form.Control
-            type="number"
-            placeholder="Enter price"
-            value={form.price}
-            onChange={(e) => setForm({ ...form, price: e.target.value })}
-            required
-          />
-        </Form.Group>
+        <Form onSubmit={handleAddProduct}>
+          <Form.Group className="mb-3">
+            <Form.Label className="add-product-file-label">Product Name</Form.Label>
+            <Form.Control
+              className="add-product-input"
+              type="text"
+              placeholder="Enter name (10–20 chars)"
+              value={form.name}
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              required
+            />
+          </Form.Group>
 
-        <Form.Group className="mb-3">
-          <Form.Label>Upload Image</Form.Label>
-          <Form.Control
-            type="file"
-            accept="image/*"
-            onChange={(e) => setForm({ ...form, image: e.target.files[0] })}
-          />
-        </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label className="add-product-file-label">Price</Form.Label>
+            <Form.Control
+              className="add-product-input"
+              type="number"
+              placeholder="Enter price"
+              value={form.price}
+              onChange={(e) => setForm({ ...form, price: e.target.value })}
+              required
+            />
+          </Form.Group>
 
-        <Form.Group className="mb-3">
-          <Form.Label>Description</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={3}
-            placeholder="Max 500 chars"
-            value={form.description}
-            onChange={(e) =>
-              setForm({ ...form, description: e.target.value })
-            }
-          />
-        </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label className="add-product-file-label">Upload Image</Form.Label>
+            <Form.Control
+              type="file"
+              accept="image/*"
+              onChange={(e) => setForm({ ...form, image: e.target.files[0] })}
+              required
+            />
+          </Form.Group>
 
-        <Button type="submit" variant="primary" disabled={!user}>
-          Add Product
-        </Button>
-      </Form>
+          <Form.Group className="mb-3">
+            <Form.Label className="add-product-file-label">Description</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={3}
+              placeholder="Max 500 chars"
+              className="add-product-textarea"
+              value={form.description}
+              onChange={(e) => setForm({ ...form, description: e.target.value })}
+            />
+          </Form.Group>
+
+          <Button type="submit" className="add-product-btn" disabled={!user}>
+            Add Product
+          </Button>
+        </Form>
+      </div>
     </Container>
+
 
   );
 };

@@ -1,3 +1,20 @@
+/* Animations */
+@keyframes fadeSlideUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes inputGlow {
+  0%, 100% { box-shadow: 0 0 6px rgba(40, 167, 69, 0.3); }
+  50% { box-shadow: 0 0 12px rgba(40, 167, 69, 0.6); }
+}
+
+@keyframes pulseBtn {
+  0% { box-shadow: 0 0 0 rgba(40, 167, 69, 0.4); }
+  50% { box-shadow: 0 0 15px rgba(40, 167, 69, 0.6); }
+  100% { box-shadow: 0 0 0 rgba(40, 167, 69, 0.4); }
+}
+
 /* Page background */
 .register-background {
   background: linear-gradient(to right, #28a745, #c6ffc6);
@@ -5,6 +22,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: "Segoe UI", sans-serif;
 }
 
 /* Card */
@@ -14,6 +32,7 @@
   border-radius: 12px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
   width: 420px;
+  animation: fadeSlideUp 0.8s ease forwards;
 }
 
 /* Title */
@@ -36,7 +55,7 @@
 
 .register-input:focus {
   border-color: #28a745;
-  box-shadow: 0 0 6px rgba(40, 167, 69, 0.3);
+  animation: inputGlow 1s infinite;
   outline: none;
 }
 
@@ -55,6 +74,7 @@
 .register-btn:hover:not(:disabled) {
   background: #218838;
   transform: translateY(-2px);
+  animation: pulseBtn 1s infinite;
 }
 
 .register-btn:disabled {
