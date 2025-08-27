@@ -32,7 +32,7 @@ export default function Login() {
 
         switch (loggedInUser.role) {
           case "customer":
-            navigate("/registerCustomer");
+            navigate("/customerProductView");
             break;
           case "vendor":
             navigate("/view-products");
