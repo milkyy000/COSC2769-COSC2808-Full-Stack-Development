@@ -55,7 +55,7 @@ const AddProduct = () => {
       data.append("image", form.image);
 
       await axios.post(
-        `http://localhost:5000/api/vendors/${user._id}/products`,
+        `http://localhost:5000/api/vendors/${user.vendorId}/products`,
         data,
         {
           withCredentials: true,

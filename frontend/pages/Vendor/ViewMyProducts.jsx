@@ -42,7 +42,7 @@ const ViewMyProducts = () => {
     setError("");
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/vendors/${user._id}/products`,
+        `http://localhost:5000/api/vendors/${user.vendorId}/products`,
         { withCredentials: true }
       );
       setProducts(res.data);
@@ -92,7 +92,7 @@ const ViewMyProducts = () => {
       }
 
       await axios.put(
-        `http://localhost:5000/api/vendors/${user._id}/products/${selectedProduct._id}`,
+        `http://localhost:5000/api/vendors/${user.vendorId}/products/${selectedProduct._id}`,
         formDataToSend,
         {
           withCredentials: true,
@@ -111,7 +111,7 @@ const ViewMyProducts = () => {
     if (!window.confirm("Are you sure?")) return;
     try {
       await axios.delete(
-        `http://localhost:5000/api/vendors/${user._id}/products/${productId}`,
+        `http://localhost:5000/api/vendors/${user.vendorId}/products/${productId}`,
         { withCredentials: true }
       );
       fetchProducts();

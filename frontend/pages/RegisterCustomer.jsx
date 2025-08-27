@@ -41,7 +41,7 @@ export default function RegisterCustomer() {
   
         if (res.msg === "Registration successful") {
           setTimeout(() => {
-            navigate("/");
+            navigate("/customerProductView");
           }, 1000);
         }
       } catch (err) {
