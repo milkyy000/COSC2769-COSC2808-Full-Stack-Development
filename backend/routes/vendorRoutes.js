@@ -20,7 +20,7 @@ router.get('/:vendorId/products', async (req, res) => {
   } catch (err) {
     console.error('❌ Failed to fetch products:', err);
     res.status(500).json({ error: 'Failed to fetch products' });
-  }
+  } 
 });
 
 

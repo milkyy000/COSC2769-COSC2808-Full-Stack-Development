@@ -42,7 +42,7 @@ const ViewMyProducts = () => {
     setError("");
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/vendors/${user.vendorId}/products`,
+        `http://localhost:5000/api/vendors/${ user.vendorId}/products`,
         { withCredentials: true }
       );
       setProducts(res.data);
