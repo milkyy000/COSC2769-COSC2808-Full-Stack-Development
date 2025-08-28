@@ -35,4 +35,25 @@ router.get("/", async (req, res) => {
     }
 });
 
+// ✅ GET one product by ID
+router.get("/:id", async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id)
+            .populate({
+                path: "vendor",
+                populate: { path: "user", select: "username profilePicture" }
+            });
+
+        if (!product) {
+            return res.status(404).json({ error: "Product not found" });
+        }
+
+        res.json(product);
+    } catch (err) {
+        console.error("❌ Failed to fetch product:", err);
+        res.status(500).json({ error: "Failed to fetch product" });
+    }
+});
+
+
 module.exports = router;

@@ -78,7 +78,7 @@ const CustomerProductDetail = () => {
                         Add to Cart
                     </Button>
                     <br />
-                    <Link to="/products">
+                    <Link to="customerProductView">
                         <Button variant="secondary" className="mt-3">
                             Back to Products
                         </Button>
