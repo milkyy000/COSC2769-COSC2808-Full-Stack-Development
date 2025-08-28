@@ -8,6 +8,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Container, Row, Col, Card, Button, Form } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const CustomerProductView = () => {
     const [products, setProducts] = useState([]);
@@ -100,21 +101,25 @@ const CustomerProductView = () => {
                             <Card.Img
                                 src={`http://localhost:5000/uploads/${product.image || "default.png"}`}
                                 alt={product.name}
+                                style={{ height: "200px", objectFit: "cover" }}
                             />
                             <Card.Body>
                                 <Card.Title>{product.name}</Card.Title>
                                 <Card.Text>
                                     <strong>${product.price}</strong>
                                     <br />
-                                    <small>{product.description}</small>
+                                    <small>
+                                        {product.description?.slice(0, 50) || ""}...
+                                    </small>
                                     <hr />
-                                    <strong>Vendor:</strong> {product.vendor?.businessName || "Unknown"}
-                                    <br />
-                                    <strong>Address:</strong> <small>{product.vendor?.businessAddress}</small>
+                                    <strong>Vendor:</strong>{" "}
+                                    {product.vendor?.businessName || "Unknown"}
                                 </Card.Text>
-                                <Button variant="success" size="sm">
-                                    ➕ Add to Cart
-                                </Button>
+                                <Link to={`/customerProductDetail/${product._id}`}>
+                                    <Button variant="primary" className="w-100">
+                                        View Details
+                                    </Button>
+                                </Link>
                             </Card.Body>
                         </Card>
                     </Col>
@@ -122,7 +127,7 @@ const CustomerProductView = () => {
             </Row>
 
             {!loading && products.length === 0 && (
-                <p>No products found. Try adjusting filters.</p>
+                <p>No products found.</p>
             )}
         </Container>
     );

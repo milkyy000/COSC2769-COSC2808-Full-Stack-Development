@@ -17,6 +17,7 @@ import RegisterVendor from "../pages/RegisterVendor";
 import RegisterShipper from "../pages/RegisterShipper";
 import MyAccount from "../pages/MyAccount";
 import CustomerProductView from "../pages/Customer/CustomerProductView";
+import CustomerProductDetail from "../pages/Customer/CustomerProductDetail";
 import CustomerProfile from "../pages/Customer/CustomerProfile"
 import CustomerLayout from "../components/Customer/CustomerLayout";
 import RoleBaseLayout from "../components/RoleBasedLayout";
@@ -65,6 +66,15 @@ const Router = createBrowserRouter([
         <CustomerLayout>
         <CustomerProductView />
         </CustomerLayout>
+    ),
+    errorElement: <NotFound />,
+  },
+  {
+    path: "/customerProductDetail/:id",
+    element: (
+      <CustomerLayout>
+      <CustomerProductDetail/>
+      </CustomerLayout>
     ),
     errorElement: <NotFound />,
   },
