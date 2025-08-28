@@ -87,7 +87,7 @@ exports.register = async (req, res) => {
             //Create cart for customer
             const newShoppingCart = new ShoppingCart({customer: newCustomer._id, items:[]});
             await newShoppingCart.save({ session });
-            extra = { name, address };
+            extra = { customerId: newCustomer._id, name, address };
         }
         else if (role === "vendor") {
             const newVendor = new Vendor({ user: newUser._id, businessName, businessAddress });
@@ -101,7 +101,7 @@ exports.register = async (req, res) => {
             }
             const newShipper = new Shipper({ user: newUser._id, distributionHub: hubDoc._id });
             await newShipper.save({ session });
-            extra = { distributionHub: hubDoc.name };
+            extra = { shipperId: newShipper._id, distributionHub: hubDoc.name };
         }
 
         await session.commitTransaction();
