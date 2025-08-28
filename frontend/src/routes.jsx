@@ -20,6 +20,7 @@ import CustomerProductView from "../pages/Customer/CustomerProductView";
 import CustomerProfile from "../pages/Customer/CustomerProfile"
 import CustomerLayout from "../components/Customer/CustomerLayout";
 import RoleBaseLayout from "../components/RoleBasedLayout";
+import ShoppingCartView from "../pages/Customer/ShoppingCartView";
 
 const Router = createBrowserRouter([
   { path: "/", element: <Login /> },
@@ -73,6 +74,15 @@ const Router = createBrowserRouter([
     element: (
       <CustomerLayout>
         <CustomerProfile />
+      </CustomerLayout>
+    ),
+    errorElement: <NotFound />,
+  },
+  {
+    path: "/shopping-cart",
+    element: (
+      <CustomerLayout>
+        <ShoppingCartView />
       </CustomerLayout>
     ),
     errorElement: <NotFound />,

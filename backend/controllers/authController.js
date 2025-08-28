@@ -11,6 +11,7 @@ const Customer = require("../models/Customer");
 const Vendor = require("../models/Vendor");
 const Shipper = require("../models/Shipper");
 const DistributionHub = require("../models/DistributionHub");
+const ShoppingCart = require("../models/ShoppingCart");
 
 // Register
 exports.register = async (req, res) => {
@@ -80,7 +81,12 @@ exports.register = async (req, res) => {
 
         if (role === "customer") {
             const newCustomer = new Customer({ user: newUser._id, name, address });
+
+
             await newCustomer.save({ session });
+            //Create cart for customer
+            const newShoppingCart = new ShoppingCart({customer: newCustomer._id, items:[]});
+            await newShoppingCart.save({ session });
             extra = { name, address };
         }
         else if (role === "vendor") {

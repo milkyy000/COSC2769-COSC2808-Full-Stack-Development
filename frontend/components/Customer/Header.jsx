@@ -27,6 +27,9 @@ const Header = () => {
       console.error("Logout error:", err);
     }
   };
+  const handleCartView = async () => {
+
+  }
 
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
@@ -35,7 +38,7 @@ const Header = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <Nav.Link as={NavLink} to="/view-products">
+            <Nav.Link as={NavLink} to="/shopping-cart">
               Shopping Cart
             </Nav.Link>
             <Nav.Link as={NavLink} to="/my-account">

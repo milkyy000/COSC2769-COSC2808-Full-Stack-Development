@@ -6,7 +6,6 @@ export const fetchProducts = createAsyncThunk(
     'products/getAllProducts',
     async(_, {rejectWithValue }) => {
         try {
-            console.log("running productSlice.js");
             const res = await axios.get("http://localhost:5000/api/products/getAllProducts",  {
         withCredentials: true,
         });
