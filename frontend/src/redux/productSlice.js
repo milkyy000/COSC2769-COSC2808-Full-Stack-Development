@@ -10,7 +10,6 @@ export const fetchProducts = createAsyncThunk(
             const res = await axios.get("http://localhost:5000/api/products/getAllProducts",  {
         withCredentials: true,
         });
-            console.log("productslice.js: " + res.data)
             return res.data;
 
         }  catch (err) {

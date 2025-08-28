@@ -9,7 +9,7 @@ import React from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 
-const Layout = ({ children }) => {
+const VendorLayout = ({ children }) => {
   return (
     <div className="d-flex flex-column min-vh-100">
       <Header />
@@ -19,4 +19,4 @@ const Layout = ({ children }) => {
   );
 };
 
-export default Layout;
+export default VendorLayout;

@@ -10,7 +10,7 @@ import { createBrowserRouter } from "react-router-dom";
 import NotFound from "../pages/NotFound";
 import ViewMyProducts from "../pages/Vendor/ViewMyProducts";
 import AddProduct from "../pages/Vendor/AddProduct";
-import Layout from "../components/Vendor/Layout";
+import Layout from "../components/Vendor/VendorLayout";
 import Login from "../pages/Login";
 import RegisterCustomer from "../pages/RegisterCustomer";
 import RegisterVendor from "../pages/RegisterVendor";
@@ -18,6 +18,8 @@ import RegisterShipper from "../pages/RegisterShipper";
 import MyAccount from "../pages/MyAccount";
 import CustomerProductView from "../pages/Customer/CustomerProductView";
 import CustomerProfile from "../pages/Customer/CustomerProfile"
+import CustomerLayout from "../components/Customer/CustomerLayout";
+import RoleBaseLayout from "../components/RoleBasedLayout";
 
 const Router = createBrowserRouter([
   { path: "/", element: <Login /> },
@@ -28,9 +30,9 @@ const Router = createBrowserRouter([
   {
     path: "/my-account",
     element: (
-      <Layout>
+      <RoleBaseLayout>
         <MyAccount />
-      </Layout>
+      </RoleBaseLayout>
     ),
     errorElement: <NotFound />,
   },
@@ -60,18 +62,18 @@ const Router = createBrowserRouter([
   {
     path: "/customerProductView",
     element: (
-      
+        <CustomerLayout>
         <CustomerProductView />
-      
+        </CustomerLayout>
     ),
     errorElement: <NotFound />,
   },
   {
     path: "/customerProfile",
     element: (
-      
+      <CustomerLayout>
         <CustomerProfile />
-      
+      </CustomerLayout>
     ),
     errorElement: <NotFound />,
   },

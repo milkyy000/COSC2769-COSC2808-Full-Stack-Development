@@ -31,11 +31,31 @@ export default function MyAccount() {
   if (!user) return <p>Loading user data...</p>;
 
   const handleEdit = () => {
-    setFormData({
-      username: user.username || "",
-      businessName: user.businessName || "",
-      businessAddress: user.businessAddress || "",
-    });
+    switch (user.role) {
+      case "customer":
+        setFormData({
+          username: user.username || "",
+          name: user.name || "",
+          address: user.address || "",
+        });
+        break;
+      case "vendor":
+        setFormData({
+          username: user.username || "",
+          businessName: user.businessName || "",
+          businessAddress: user.businessAddress || "",
+        });
+        break;
+      case "shipper":
+        setFormData({
+
+        });
+        break;
+      default:
+        setFormData({
+
+        });
+    }
     setProfilePic(null);
     setShowModal(true);
   };
@@ -86,6 +106,7 @@ export default function MyAccount() {
                   <p><strong>Role:</strong> {user.role}</p>
                   <p><strong>Username:</strong> {user.username}</p>
                   {user.name && <p><strong>Name:</strong> {user.name}</p>}
+                  {user.address && <p><strong>Address:</strong> {user.address}</p>}
                   {user.businessName && <p><strong>Business Name:</strong> {user.businessName}</p>}
                   {user.businessAddress && <p><strong>Business Address:</strong> {user.businessAddress}</p>}
                   {user.distributionHub && <p><strong>Hub:</strong> {user.distributionHub}</p>}
