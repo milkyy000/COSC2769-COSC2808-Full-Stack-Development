@@ -1,20 +1,33 @@
+// RMIT University Vietnam
+// Course: COSC2769 - Full Stack Development
+// Semester: 2025B
+// Assessment: Assignment 02
+// Author: Tran Huu Viet Hung
+// ID: s3975170
+
 require('dotenv').config({ path: __dirname + '/../.env' });
 const mongoose = require('mongoose');
 const DistributionHub = require('../models/DistributionHub');
 
 async function main() {
   try {
-    // Connect to MongoDB
     await mongoose.connect(process.env.MONGO_URI);
     console.log('Connected to MongoDB');
 
+    // Provinces same as frontend select list
     const hubs = [
-      { name: 'Central Hub', address: '10 Logistics Ave' },
-      { name: 'East Hub', address: '22 Shipping Blvd' },
-      { name: 'West Hub', address: '55 Cargo Road' }
+      { name: 'Ha Noi', address: 'Ha Noi city center' },
+      { name: 'Ho Chi Minh', address: 'Ho Chi Minh city center' },
+      { name: 'Đa Nang', address: 'Da Nang city center' },
+      { name: 'Hai Phong', address: 'Hai Phong city center' },
+      { name: 'Can Tho', address: 'Can Tho city center' },
+      { name: 'Hue', address: 'Hue city center' },
+      { name: 'Nha Trang', address: 'Nha Trang city center' }
     ];
 
+    await DistributionHub.deleteMany(); // clear old hubs to avoid duplicates
     await DistributionHub.insertMany(hubs);
+
     console.log('Distribution hubs inserted!');
   } catch (err) {
     console.error('Error inserting hubs:', err);
