@@ -86,7 +86,7 @@ export default function MyAccount() {
   };
 
   return (
-    <Container className="myaccount-background py-5">
+    <Container className="myaccount-background py-5 mt-5">
       <Row className="justify-content-center">
         <Col md={8} lg={6}>
           <Card className="myaccount-card shadow-lg rounded-4">

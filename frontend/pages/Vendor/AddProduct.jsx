@@ -23,15 +23,6 @@ const AddProduct = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    if (name === "image") {
-      setForm({ ...form, image: files[0] }); // store File object
-    } else {
-      setForm({ ...form, [name]: value });
-    }
-  };
-
   const handleAddProduct = async (e) => {
     e.preventDefault();
     setError("");
@@ -44,6 +35,15 @@ const AddProduct = () => {
 
     if (!form.image) {
       setError("⚠️ Product image is required.");
+      return;
+    }
+
+    if (form.price <= 0) {
+      setError("⚠️ Product price must be positive number")
+    }
+
+    if (form.description.length > 500) {
+      setError("⚠️ Description must be 500 characters or less.");
       return;
     }
 
@@ -124,6 +124,7 @@ const AddProduct = () => {
               className="add-product-textarea"
               value={form.description}
               onChange={(e) => setForm({ ...form, description: e.target.value })}
+              maxLength={500}
             />
           </Form.Group>
 

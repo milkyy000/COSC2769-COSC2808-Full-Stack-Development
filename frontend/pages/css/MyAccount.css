@@ -7,7 +7,7 @@
 
 .myaccount-background {
     background: linear-gradient(135deg, #e0f7fa, #ffffff);
-    min-height: 100vh;
+    min-height: 50vh;
 }
 
 .myaccount-card {

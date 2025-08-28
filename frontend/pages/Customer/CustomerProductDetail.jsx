@@ -8,7 +8,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Container, Row, Col, Card, Button, Badge } from "react-bootstrap";
+import "../css/CustomerProductDetail.css"
 
 const CustomerProductDetail = () => {
     const { id } = useParams();
@@ -54,35 +55,53 @@ const CustomerProductDetail = () => {
     if (!product) return null;
 
     return (
-        <Container>
-            <Row className="mt-4">
-                <Col md={6}>
-                    <Card.Img
-                        src={`http://localhost:5000/uploads/${product.image || "default.png"}`}
-                        alt={product.name}
-                        style={{ width: "100%", height: "auto" }}
-                    />
-                </Col>
-                <Col md={6}>
-                    <h2>{product.name}</h2>
-                    <h4>${product.price}</h4>
-                    <p>{product.description}</p>
-                    <hr />
-                    <p>
-                        <strong>Vendor:</strong>{" "}
-                        {product.vendor?.businessName || "Unknown"} <br />
-                        <strong>Address:</strong>{" "}
-                        {product.vendor?.businessAddress || "N/A"}
-                    </p>
-                    <Button variant="success" onClick={handleAddToCart}>
-                        Add to Cart
+        <Container className="my-4">
+            {/* Back button at top left */}
+            <div className="mb-3">
+                <Link to="/customerProductView">
+                    <Button variant="outline-secondary" size="sm">
+                        ← Back to Products
                     </Button>
-                    <br />
-                    <Link to="customerProductView">
-                        <Button variant="secondary" className="mt-3">
-                            Back to Products
+                </Link>
+            </div>
+
+            <Row className="g-4">
+                {/* Product Image */}
+                <Col md={6}>
+                    <Card className="shadow-sm border-0">
+                        <Card.Img
+                            src={`http://localhost:5000/uploads/${product.image || "default.png"}`}
+                            alt={product.name}
+                            style={{ width: "100%", height: "auto", borderRadius: "12px" }}
+                        />
+                    </Card>
+                </Col>
+
+                {/* Product Info */}
+                <Col md={6} className="d-flex flex-column justify-content-between">
+                    <div>
+                        <h2 className="fw-bold">{product.name}</h2>
+                        <h4 className="text-success mb-3">
+                            ${product.price}
+                        </h4>
+                        <p className="product-description flex-grow-1">{product.description}</p>
+                        <hr />
+                        <p>
+                            <strong>Vendor:</strong>{" "}
+                            <Badge bg="info" className="ms-1">
+                                {product.vendor?.businessName || "Unknown"}
+                            </Badge>
+                            <br />
+                            <strong>Address:</strong>{" "}
+                            {product.vendor?.businessAddress || "N/A"}
+                        </p>
+                    </div>
+
+                    <div>
+                        <Button variant="success" size="lg" className="w-100" onClick={handleAddToCart}>
+                            🛒 Add to Cart
                         </Button>
-                    </Link>
+                    </div>
                 </Col>
             </Row>
         </Container>

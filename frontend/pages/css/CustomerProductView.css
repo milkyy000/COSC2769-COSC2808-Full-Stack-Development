@@ -1,0 +1,20 @@
+.product-card {
+    min-height: 380px;
+    /* ensures consistent card height */
+}
+
+.product-card .description {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* show max 2 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.filter-bar {
+    position: sticky;
+    top: 0;
+    z-index: 1050;
+    /* above cards but below nav */
+}

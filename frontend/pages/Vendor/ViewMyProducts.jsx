@@ -205,6 +205,7 @@ const ViewMyProducts = () => {
                 value={formData.description}
                 onChange={handleFormChange}
                 rows={3}
+                maxLength={500}
               />
             </Form.Group>
             <Form.Group className="mb-3">
