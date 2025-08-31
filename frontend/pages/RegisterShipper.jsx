@@ -39,7 +39,7 @@ export default function RegisterShipper() {
             const res = await dispatch(registerUser(form)).unwrap();
             setSuccessMsg(res.msg);
             if (res.msg === "Registration successful") {
-                setTimeout(() => navigate("/view-products"), 1000);
+                setTimeout(() => navigate("/shipper/orders"), 1000);
             }
         } catch (err) {
             setError(err);

@@ -22,6 +22,8 @@ import CustomerProfile from "../pages/Customer/CustomerProfile"
 import CustomerLayout from "../components/Customer/CustomerLayout";
 import RoleBaseLayout from "../components/RoleBasedLayout";
 import ShoppingCartView from "../pages/Customer/ShoppingCartView";
+import ShipOrders from "../pages/Shipper/ShipOrders";
+import OrderDetail from "../pages/Shipper/OrderDetails";
 
 const Router = createBrowserRouter([
   { path: "/", element: <Login /> },
@@ -97,7 +99,24 @@ const Router = createBrowserRouter([
     ),
     errorElement: <NotFound />,
   },
-
+  {
+    path: "/shipper/orders",
+    element: (
+      <RoleBaseLayout>
+        <ShipOrders />
+      </RoleBaseLayout>
+    ),
+    errorElement: <NotFound />,
+  },
+  {
+    path: "/shipper/orders/:id",
+    element: (
+      <RoleBaseLayout>
+        <OrderDetail />
+      </RoleBaseLayout>
+    ),
+    errorElement: <NotFound />,
+  },
   // ✅ Catch-all route (must be last)
   { path: "*", element: <NotFound /> },
 ]);

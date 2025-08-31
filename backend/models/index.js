@@ -3,7 +3,7 @@ module.exports = {
   Customer: require('./Customer'),
   Vendor: require('./Vendor'),
   Shipper: require('./Shipper'),
-  DistributionHub: require('./distributionHub'),
+  DistributionHub: require('./DistributionHub'),
   Product: require('./Product'),
   ShoppingCart: require('./ShoppingCart'),
   Order: require('./Order')

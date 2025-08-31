@@ -38,7 +38,7 @@ export default function Login() {
             navigate("/view-products");
             break;
           case "shipper":
-            navigate("/registerShipper");
+            navigate("/shipper/orders");
             break;
           default:
             navigate("/");
