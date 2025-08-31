@@ -1,0 +1,122 @@
+/* RMIT University Vietnam
+// Course: COSC2769 - Full Stack Development
+// Semester: 2025B
+// Assessment: Assignment 02
+// Author: Tran Quy Duc
+// ID: s4070049 */
+
+/* Animations */
+@keyframes fadeSlideUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes inputGlow {
+  0%, 100% { box-shadow: 0 0 6px rgba(40, 167, 69, 0.3); }
+  50% { box-shadow: 0 0 12px rgba(40, 167, 69, 0.6); }
+}
+
+@keyframes pulseBtn {
+  0% { box-shadow: 0 0 0 rgba(40, 167, 69, 0.4); }
+  50% { box-shadow: 0 0 15px rgba(40, 167, 69, 0.6); }
+  100% { box-shadow: 0 0 0 rgba(40, 167, 69, 0.4); }
+}
+
+/* Page background */
+.register-background {
+  background: linear-gradient(to right, #28a745, #c6ffc6);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Card */
+.register-card {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  width: 420px;
+  animation: fadeSlideUp 0.8s ease forwards;
+}
+
+/* Title */
+.register-title {
+  color: #28a745;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Inputs */
+.register-input {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 1rem;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+.register-input:focus {
+  border-color: #28a745;
+  animation: inputGlow 1s infinite;
+  outline: none;
+}
+
+/* Button */
+.register-btn {
+  background: #28a745;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem;
+  width: 100%;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.register-btn:hover:not(:disabled) {
+  background: #218838;
+  transform: translateY(-2px);
+  animation: pulseBtn 1s infinite;
+}
+
+.register-btn:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+/* Success & Error */
+.success-msg {
+  color: #28a745;
+  text-align: center;
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+.error-msg {
+  color: #dc3545;
+  text-align: center;
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+/* Login link */
+.register-subtext {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #555;
+}
+
+.register-subtext a {
+  color: #28a745;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.register-subtext a:hover {
+  text-decoration: underline;
+}

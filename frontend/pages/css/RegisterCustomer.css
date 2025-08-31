@@ -1,0 +1,148 @@
+/* RMIT University Vietnam
+// Course: COSC2769 - Full Stack Development
+// Semester: 2025B
+// Assessment: Assignment 02
+// Author: Tran Quy Duc
+// ID: s4070049 */
+
+@keyframes fadeSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes inputGlow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 6px rgba(168, 85, 247, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 0 12px rgba(168, 85, 247, 0.7);
+  }
+}
+
+@keyframes pulseBtn {
+  0% {
+    box-shadow: 0 0 0 rgba(232, 121, 249, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 0 15px rgba(232, 121, 249, 0.6);
+  }
+
+  100% {
+    box-shadow: 0 0 0 rgba(232, 121, 249, 0.4);
+  }
+}
+
+.customer-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  animation: pulseBtn 1s infinite;
+}
+
+
+/* Background */
+.customer-background {
+  background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Card */
+.customer-card {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  width: 420px;
+  animation: fadeSlideUp 0.8s ease forwards;
+}
+
+/* Title */
+.customer-title {
+  color: #a855f7;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+/* Inputs */
+.customer-input {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  margin-bottom: 1rem;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+.customer-input:focus {
+  border-color: #a855f7;
+  animation: inputGlow 1s infinite;
+  outline: none;
+}
+
+/* Button */
+.customer-btn {
+  background: linear-gradient(135deg, #a855f7, #ec4899);
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  padding: 0.75rem;
+  width: 100%;
+  transition: transform 0.2s, opacity 0.3s;
+}
+
+.customer-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  animation: pulseBtn 1s infinite;
+}
+
+.customer-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Success & Error */
+.customer-success {
+  color: #16a34a;
+  text-align: center;
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+.customer-error {
+  color: #dc2626;
+  text-align: center;
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+/* Login link */
+.customer-subtext {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #555;
+}
+
+.customer-subtext a {
+  color: #a855f7;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.customer-subtext a:hover {
+  text-decoration: underline;
+}

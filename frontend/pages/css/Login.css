@@ -1,0 +1,132 @@
+/* RMIT University Vietnam
+// Course: COSC2769 - Full Stack Development
+// Semester: 2025B
+// Assessment: Assignment 02
+// Author: Tran Quy Duc
+// ID: s4070049 */
+
+/* Animations */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 10px rgba(97, 218, 251, 0.2); }
+  50% { box-shadow: 0 0 30px rgba(97, 218, 251, 0.7); }
+  100% { box-shadow: 0 0 10px rgba(97, 218, 251, 0.2); }
+}
+
+@keyframes fadeSlideUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Background gradient */
+.login-background {
+  background: linear-gradient(-45deg, #000, #111, #222, #000);
+  background-size: 400% 400%;
+  animation: gradientShift 8s ease infinite;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+/* Card styling */
+.login-card {
+  background-color: #1c1c1c;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 100%;
+  padding: 2rem;
+  border: 1px solid #61dafb;
+  animation: pulseGlow 3s infinite ease-in-out, fadeSlideUp 0.8s ease forwards;
+}
+
+/* Title */
+.login-title {
+  color: #61dafb;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Labels */
+.login-label {
+  color: #61dafb;
+  font-weight: 500;
+}
+
+/* Inputs */
+.login-input {
+  background-color: #222 !important;
+  color: white !important;
+  border: 1px solid #61dafb !important;
+  border-radius: 8px;
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+.login-input:focus {
+  border-color: #61dafb;
+  box-shadow: 0 0 8px #61dafb;
+  outline: none;
+  animation: none;
+}
+
+/* Login button */
+.login-btn {
+  background-color: #61dafb;
+  color: #000;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem;
+  width: 100%;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.login-btn:hover:not(:disabled) {
+  background-color: #4db8da;
+  transform: translateY(-2px);
+}
+
+.login-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Divider */
+.login-divider {
+  border-color: #61dafb;
+  margin: 1rem 0;
+}
+
+/* Subtext */
+.login-subtext {
+  color: #aaa;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* Register buttons */
+.login-register-btn {
+  background-color: transparent;
+  border: 1px solid #61dafb;
+  color: #61dafb;
+  border-radius: 8px;
+  padding: 0.5rem;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.login-register-btn:hover {
+  background-color: #61dafb;
+  color: #000;
+  transform: translateY(-2px);
+}

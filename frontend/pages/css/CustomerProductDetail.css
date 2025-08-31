@@ -1,0 +1,7 @@
+.product-description {
+  white-space: pre-wrap;    /* Wraps text and keeps line breaks */
+  word-wrap: break-word;    /* Break long words */
+  overflow-wrap: break-word;
+  max-height: 150px;        /* Limit height */
+  overflow-y: auto;         /* Scroll if too long */
+}

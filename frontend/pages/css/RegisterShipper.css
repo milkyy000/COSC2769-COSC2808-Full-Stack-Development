@@ -1,0 +1,124 @@
+/* RMIT University Vietnam
+// Course: COSC2769 - Full Stack Development
+// Semester: 2025B
+// Assessment: Assignment 02
+// Author: Tran Quy Duc
+// ID: s4070049 */
+
+/* Animations */
+@keyframes fadeSlideUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes inputGlow {
+  0%, 100% { box-shadow: 0 0 6px rgba(249, 115, 22, 0.4); }
+  50% { box-shadow: 0 0 12px rgba(249, 115, 22, 0.7); }
+}
+
+@keyframes pulseBtn {
+  0% { box-shadow: 0 0 0 rgba(249, 115, 22, 0.4); }
+  50% { box-shadow: 0 0 15px rgba(249, 115, 22, 0.6); }
+  100% { box-shadow: 0 0 0 rgba(249, 115, 22, 0.4); }
+}
+
+/* Page background */
+.shipper-background {
+  background: linear-gradient(135deg, #f59e0b 70%, #fde68a 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Card */
+.shipper-card {
+  background: #fff8f0;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  width: 420px;
+  animation: fadeSlideUp 0.8s ease forwards;
+}
+
+/* Title */
+.shipper-title {
+  color: #f97316;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+/* Inputs and select */
+.shipper-input,
+.shipper-select {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 10px;
+  border: 1px solid #f59e0b;
+  margin-bottom: 1rem;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+.shipper-input:focus,
+.shipper-select:focus {
+  border-color: #f97316;
+  animation: inputGlow 1s infinite;
+  outline: none;
+}
+
+/* Button */
+.shipper-btn {
+  background: #f97316;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  padding: 0.75rem;
+  width: 100%;
+  transition: transform 0.2s, opacity 0.3s;
+}
+
+.shipper-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  opacity: 0.9;
+  animation: pulseBtn 1s infinite;
+}
+
+.shipper-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Success & Error */
+.shipper-success {
+  color: #16a34a;
+  text-align: center;
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+.shipper-error {
+  color: #dc2626;
+  text-align: center;
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+/* Login link */
+.shipper-subtext {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #555;
+}
+
+.shipper-subtext a {
+  color: #f97316;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.shipper-subtext a:hover {
+  text-decoration: underline;
+}
