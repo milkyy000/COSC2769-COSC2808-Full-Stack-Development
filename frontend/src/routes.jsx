@@ -5,7 +5,6 @@
 // Author: Tran Quy Duc
 // ID: s4070049
 
-// route.jsx
 import { createBrowserRouter } from "react-router-dom";
 import NotFound from "../pages/NotFound";
 import ViewMyProducts from "../pages/Vendor/ViewMyProducts";
@@ -24,7 +23,11 @@ import RoleBaseLayout from "../components/RoleBasedLayout";
 import ShoppingCartView from "../pages/Customer/ShoppingCartView";
 import ShipOrders from "../pages/Shipper/ShipOrders";
 import OrderDetail from "../pages/Shipper/OrderDetails";
-
+import About from "../components/FooterPages/About";
+import Privacy from "../components/FooterPages/Privacy";
+import Help from "../components/FooterPages/Help";
+import Feedback from "../components/FooterPages/Feedback";
+import RequireAuth from "./RequireAuth";
 const Router = createBrowserRouter([
   { path: "/", element: <Login /> },
   { path: "/registerCustomer", element: <RegisterCustomer /> },
@@ -34,9 +37,11 @@ const Router = createBrowserRouter([
   {
     path: "/my-account",
     element: (
-      <RoleBaseLayout>
-        <MyAccount />
-      </RoleBaseLayout>
+      <RequireAuth>
+        <RoleBaseLayout>
+          <MyAccount />
+        </RoleBaseLayout>
+      </RequireAuth>
     ),
     errorElement: <NotFound />,
   },
@@ -44,31 +49,31 @@ const Router = createBrowserRouter([
   {
     path: "/view-products",
     element: (
-     
-        <Layout>
-          <ViewMyProducts />
-        </Layout>
-   
+
+      <Layout>
+        <ViewMyProducts />
+      </Layout>
+
     ),
     errorElement: <NotFound />,
   },
   {
     path: "/add-product",
     element: (
-      
-        <Layout>
-          <AddProduct />
-        </Layout>
-  
+
+      <Layout>
+        <AddProduct />
+      </Layout>
+
     ),
     errorElement: <NotFound />,
   },
   {
     path: "/customerProductView",
     element: (
-        <CustomerLayout>
+      <CustomerLayout>
         <CustomerProductView />
-        </CustomerLayout>
+      </CustomerLayout>
     ),
     errorElement: <NotFound />,
   },
@@ -76,7 +81,7 @@ const Router = createBrowserRouter([
     path: "/customerProductDetail/:id",
     element: (
       <CustomerLayout>
-      <CustomerProductDetail/>
+        <CustomerProductDetail />
       </CustomerLayout>
     ),
     errorElement: <NotFound />,
@@ -113,6 +118,42 @@ const Router = createBrowserRouter([
     element: (
       <RoleBaseLayout>
         <OrderDetail />
+      </RoleBaseLayout>
+    ),
+    errorElement: <NotFound />,
+  },
+  {
+    path: "/about",
+    element: (
+      <RoleBaseLayout>
+        <About />
+      </RoleBaseLayout>
+    ),
+    errorElement: <NotFound />,
+  },
+  {
+    path: "/privacy",
+    element: (
+      <RoleBaseLayout>
+        <Privacy />
+      </RoleBaseLayout>
+    ),
+    errorElement: <NotFound />,
+  },
+  {
+    path: "/help",
+    element: (
+      <RoleBaseLayout>
+        <Help />
+      </RoleBaseLayout>
+    ),
+    errorElement: <NotFound />,
+  },
+  {
+    path: "/feedback",
+    element: (
+      <RoleBaseLayout>
+        <Feedback />
       </RoleBaseLayout>
     ),
     errorElement: <NotFound />,

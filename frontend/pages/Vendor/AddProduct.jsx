@@ -9,7 +9,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Container, Form, Button, Alert } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { authSelect } from "../../src/redux/authSlice"; // ⚠️ adjust path if needed
+import { authSelect } from "../../src/redux/authSlice"; 
 import "../css/AddProduct.css"
 
 const AddProduct = () => {
@@ -18,7 +18,7 @@ const AddProduct = () => {
     name: "",
     price: "",
     description: "",
-    image: null, // will be File
+    image: null, 
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
