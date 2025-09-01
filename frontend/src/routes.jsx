@@ -27,6 +27,7 @@ import About from "../components/FooterPages/About";
 import Privacy from "../components/FooterPages/Privacy";
 import Help from "../components/FooterPages/Help";
 import Feedback from "../components/FooterPages/Feedback";
+import RequireAuth from "./RequireAuth";
 const Router = createBrowserRouter([
   { path: "/", element: <Login /> },
   { path: "/registerCustomer", element: <RegisterCustomer /> },
@@ -36,9 +37,11 @@ const Router = createBrowserRouter([
   {
     path: "/my-account",
     element: (
-      <RoleBaseLayout>
-        <MyAccount />
-      </RoleBaseLayout>
+      <RequireAuth>
+        <RoleBaseLayout>
+          <MyAccount />
+        </RoleBaseLayout>
+      </RequireAuth>
     ),
     errorElement: <NotFound />,
   },
@@ -46,31 +49,31 @@ const Router = createBrowserRouter([
   {
     path: "/view-products",
     element: (
-     
-        <Layout>
-          <ViewMyProducts />
-        </Layout>
-   
+
+      <Layout>
+        <ViewMyProducts />
+      </Layout>
+
     ),
     errorElement: <NotFound />,
   },
   {
     path: "/add-product",
     element: (
-      
-        <Layout>
-          <AddProduct />
-        </Layout>
-  
+
+      <Layout>
+        <AddProduct />
+      </Layout>
+
     ),
     errorElement: <NotFound />,
   },
   {
     path: "/customerProductView",
     element: (
-        <CustomerLayout>
+      <CustomerLayout>
         <CustomerProductView />
-        </CustomerLayout>
+      </CustomerLayout>
     ),
     errorElement: <NotFound />,
   },
@@ -78,7 +81,7 @@ const Router = createBrowserRouter([
     path: "/customerProductDetail/:id",
     element: (
       <CustomerLayout>
-      <CustomerProductDetail/>
+        <CustomerProductDetail />
       </CustomerLayout>
     ),
     errorElement: <NotFound />,
@@ -120,41 +123,41 @@ const Router = createBrowserRouter([
     errorElement: <NotFound />,
   },
   {
-  path: "/about",
-  element: (
-    <RoleBaseLayout>
-      <About />
-    </RoleBaseLayout>
-  ),
-  errorElement: <NotFound />,
-},
-{
-  path: "/privacy",
-  element: (
-    <RoleBaseLayout>
-      <Privacy />
-    </RoleBaseLayout>
-  ),
-  errorElement: <NotFound />,
-},
-{
-  path: "/help",
-  element: (
-    <RoleBaseLayout>
-      <Help />
-    </RoleBaseLayout>
-  ),
-  errorElement: <NotFound />,
-},
-{
-  path: "/feedback",
-  element: (
-    <RoleBaseLayout>
-      <Feedback />
-    </RoleBaseLayout>
-  ),
-  errorElement: <NotFound />,
-},
+    path: "/about",
+    element: (
+      <RoleBaseLayout>
+        <About />
+      </RoleBaseLayout>
+    ),
+    errorElement: <NotFound />,
+  },
+  {
+    path: "/privacy",
+    element: (
+      <RoleBaseLayout>
+        <Privacy />
+      </RoleBaseLayout>
+    ),
+    errorElement: <NotFound />,
+  },
+  {
+    path: "/help",
+    element: (
+      <RoleBaseLayout>
+        <Help />
+      </RoleBaseLayout>
+    ),
+    errorElement: <NotFound />,
+  },
+  {
+    path: "/feedback",
+    element: (
+      <RoleBaseLayout>
+        <Feedback />
+      </RoleBaseLayout>
+    ),
+    errorElement: <NotFound />,
+  },
   // ✅ Catch-all route (must be last)
   { path: "*", element: <NotFound /> },
 ]);
