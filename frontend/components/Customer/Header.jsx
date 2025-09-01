@@ -9,12 +9,12 @@ import React from "react";
 import axios from "axios";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
-import { logoutSuccess } from "../../src/redux/authSlice";
-import { useDispatch } from "react-redux";
-
+import { authSelect, logoutSuccess } from "../../src/redux/authSlice";
+import { useDispatch, useSelector } from "react-redux";
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch(); // ✅ create dispatch
+  const user = useSelector(authSelect.user)
 
   const handleLogout = async () => {
     try {
@@ -27,9 +27,6 @@ const Header = () => {
       console.error("Logout error:", err);
     }
   };
-  const handleCartView = async () => {
-
-  }
 
   return (
     <Navbar bg="dark" variant="dark" expand="lg">

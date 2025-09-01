@@ -7,11 +7,14 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import { Container, Row, Col, Card, Button, Badge } from "react-bootstrap";
 import "../css/CustomerProductDetail.css"
+import { authSelect } from "../../src/redux/authSlice";
 
 const CustomerProductDetail = () => {
+    const user = useSelector(authSelect.user);
     const { id } = useParams();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -32,17 +35,19 @@ const CustomerProductDetail = () => {
         }
     };
 
-    const handleAddToCart = async () => {
+    const handleAddToCart = async (userId, productId) => {
         try {
-            await axios.post(
-                `http://localhost:5000/api/cart`,
-                { productId: product._id },
+            const res = await axios.post(
+                `http://localhost:5000/api/carts/add/${userId}/${productId}`,
                 { withCredentials: true }
             );
-            alert("✅ Product added to cart!");
+            alert("Item added to cart!");
         } catch (err) {
-            console.error("❌ Failed to add to cart:", err);
-            alert("Failed to add to cart.");
+            if (err.response) {
+                alert(err.response.data.error); // ⬅️ backend error message
+            } else {
+                alert("Something went wrong.");
+            }
         }
     };
 
@@ -98,7 +103,7 @@ const CustomerProductDetail = () => {
                     </div>
 
                     <div>
-                        <Button variant="success" size="lg" className="w-100" onClick={handleAddToCart}>
+                        <Button variant="success" size="lg" className="w-100" onClick={() => handleAddToCart(user._id, product._id)}>
                             🛒 Add to Cart
                         </Button>
                     </div>

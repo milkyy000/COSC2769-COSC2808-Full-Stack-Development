@@ -82,10 +82,9 @@ exports.register = async (req, res) => {
         if (role === "customer") {
             const newCustomer = new Customer({ user: newUser._id, name, address });
 
-
             await newCustomer.save({ session });
             //Create cart for customer
-            const newShoppingCart = new ShoppingCart({customer: newCustomer._id, items:[]});
+            const newShoppingCart = new ShoppingCart({customer: newCustomer._id, items: []});
             await newShoppingCart.save({ session });
             extra = { customerId: newCustomer._id, name, address };
         }
