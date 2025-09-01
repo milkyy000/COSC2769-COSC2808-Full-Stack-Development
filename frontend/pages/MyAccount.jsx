@@ -1,6 +1,10 @@
+// RMIT University Vietnam
+// Course: COSC2769 - Full Stack Development
+// Semester: 2025B
+// Assessment: Assignment 02
+// Author: Tran Quy Duc
+// ID: s4070049
 
-
-// MyAccount.jsx
 import { useDispatch, useSelector } from "react-redux";
 import { authSelect, updateProfile } from "../src/redux/authSlice";
 import { useState } from "react";
