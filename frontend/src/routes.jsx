@@ -17,7 +17,8 @@ import RegisterShipper from "../pages/RegisterShipper";
 import MyAccount from "../pages/MyAccount";
 import CustomerProductView from "../pages/Customer/CustomerProductView";
 import CustomerProductDetail from "../pages/Customer/CustomerProductDetail";
-import CustomerProfile from "../pages/Customer/CustomerProfile"
+import CustomerProfile from "../pages/Customer/CustomerProfile";
+import OrderView from "../pages/Customer/OrderView";
 import CustomerLayout from "../components/Customer/CustomerLayout";
 import RoleBaseLayout from "../components/RoleBasedLayout";
 import ShoppingCartView from "../pages/Customer/ShoppingCartView";
@@ -100,6 +101,15 @@ const Router = createBrowserRouter([
     element: (
       <CustomerLayout>
         <ShoppingCartView />
+      </CustomerLayout>
+    ),
+    errorElement: <NotFound />,
+  },
+  {
+    path: "/order-view",
+    element: (
+      <CustomerLayout>
+        <OrderView/>
       </CustomerLayout>
     ),
     errorElement: <NotFound />,

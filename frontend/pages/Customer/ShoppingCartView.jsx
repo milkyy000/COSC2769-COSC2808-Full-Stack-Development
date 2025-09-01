@@ -56,6 +56,19 @@ export default function ShoppingCartView() {
     }
   };
 
+  const handleOrder = async (req, res) => {
+    try {
+      const res = await axios.post(
+        `http://localhost:5000/api/carts/${user._id}/createOrder`,
+        {withCredentials: true}
+      );
+      setShoppingCart(res.data);
+      console.log("created order shoppingcartview.jsx");
+    } catch (err) {
+      console.error("❌ Failed to remove item:", err);
+    }
+  }
+
   useEffect(() => {
     fetchShoppingCart();
   }, [user]);
@@ -66,53 +79,54 @@ export default function ShoppingCartView() {
 
   return (
     <div className="container mt-4">
-  <h2>Your Shopping Cart</h2>
-  <ul className="list-group">
-    {shoppingCart.items.map((item) => (
-      <li
-        key={item.product._id}
-        className="list-group-item d-flex justify-content-between align-items-center border rounded p-2 mb-2 shadow-sm"
-      >
-        {/* Product Image */}
-        <img
-          src={`http://localhost:5000/uploads/${item.product.image || "default.png"}`}
-          alt={item.product.name}
-          className="img-thumbnail me-3"
-          style={{ width: "80px", height: "80px", objectFit: "cover" }}
-        />
+      <h2 className="d-inline-block me-2" >Your Shopping Cart</h2>
+      <button className="btn btn-success align-middle mb-2" onClick={() => handleOrder()}>🛒 Create order 🛒</button>
+      <ul className="list-group">
+        {shoppingCart.items.map((item) => (
+          <li
+            key={item.product._id}
+            className="list-group-item d-flex justify-content-between align-items-center border rounded p-2 mb-2 shadow-sm"
+          >
+            {/* Product Image */}
+            <img
+              src={`http://localhost:5000/uploads/${item.product.image || "default.png"}`}
+              alt={item.product.name}
+              className="img-thumbnail me-3"
+              style={{ width: "80px", height: "80px", objectFit: "cover" }}
+            />
 
-        {/* Product Details */}
-        <div className="flex-grow-1">
-          <strong>{item.product.name}</strong> <br />
-          ${item.product.price} each
-        </div>
+            {/* Product Details */}
+            <div className="flex-grow-1">
+              <strong>{item.product.name}</strong> <br />
+              ${item.product.price} each
+            </div>
 
-        {/* Quantity Controls */}
-        <div className="d-flex align-items-center">
-          <button
-            className="btn btn-sm btn-outline-secondary mx-1"
-            onClick={() => updateQuantity(item.product._id, item.quantity - 1)}
-          >
-            -
-          </button>
-          <span className="mx-2">{item.quantity}</span>
-          <button
-            className="btn btn-sm btn-outline-secondary mx-1"
-            onClick={() => updateQuantity(item.product._id, item.quantity + 1)}
-          >
-            +
-          </button>
-          <button
-            className="btn btn-sm btn-danger ms-3"
-            onClick={() => removeItem(item.product._id)}
-          >
-            Remove
-          </button>
-        </div>
-      </li>
-    ))}
-  </ul>
-</div>
+            {/* Quantity Controls */}
+            <div className="d-flex align-items-center">
+              <button
+                className="btn btn-sm btn-outline-secondary mx-1"
+                onClick={() => updateQuantity(item.product._id, item.quantity - 1)}
+              >
+                -
+              </button>
+              <span className="mx-2">{item.quantity}</span>
+              <button
+                className="btn btn-sm btn-outline-secondary mx-1"
+                onClick={() => updateQuantity(item.product._id, item.quantity + 1)}
+              >
+                +
+              </button>
+              <button
+                className="btn btn-sm btn-danger ms-3"
+                onClick={() => removeItem(item.product._id)}
+              >
+                Remove
+              </button>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
 
   );
 }

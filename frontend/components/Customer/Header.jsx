@@ -35,6 +35,9 @@ const Header = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
+            <Nav.Link as={NavLink} to="/order-view">
+              Orders
+            </Nav.Link>
             <Nav.Link as={NavLink} to="/shopping-cart">
               Shopping Cart
             </Nav.Link>

@@ -9,6 +9,7 @@ const Shipper = require("../models/Shipper");
 const Product = require('../models/Product')
 const DistributionHub = require("../models/DistributionHub");
 const ShoppingCart = require("../models/ShoppingCart");
+const Order = require("../models/Order");
 
 // router.get(':/customerId/shoppingCart', async(req, res) => {
 //     try{
@@ -101,7 +102,7 @@ router.put("/:userId/shoppingCart", async (req, res) => {
     const itemIndex = cart.items.findIndex((i) => i.product._id.toString() === productId);
     if (itemIndex === -1) return res.status(404).json({ message: "Item not found in cart" });
 
-      // Update quantity
+    // Update quantity
     cart.items[itemIndex].quantity = quantity;
 
     await cart.save();
@@ -142,5 +143,61 @@ router.delete("/:userId/shoppingCart/:productId", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
+router.post("/:userId/createOrder", async (req, res) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
+  try {
+    const { userId } = req.params;
+    // Find customer
+    const customer = await Customer.findOne({ user: userId });
+    if (!customer) return res.status(404).json({ message: "Customer not found" });
+    // Find cart
+    let cart = await ShoppingCart.findOne({ customer: customer._id }).populate("items.product");
+    if (!cart) return res.status(404).json({ message: "Cart not found" });
+    if (!cart.items || cart.items.length === 0) {
+      return res.status(400).json({ message: "Cart is empty" });
+    }
+    const orderItems = cart.items.map(item => ({
+      product: item.product._id,
+      quantity: item.quantity,
+      price: item.product.price, // take the price from product
+    }));
+
+    //Find hub
+    const hub = await DistributionHub.aggregate([{ $sample: { size: 1 } }]);
+    if (!hub || hub.length === 0) {
+      return res.status(404).json({ message: "No distribution hubs available" });
+    }
+
+    // Create order
+    const order = new Order({
+      customer: customer._id,
+      distributionHub: hub[0]._id,
+      status: "active",
+      createdAt: Date.now(),
+      items: orderItems,
+    });
+
+    await order.save({ session });
+
+    // Clear cart
+    cart.items = [];
+    await cart.save({ session });
+
+    // Commit transaction
+    await session.commitTransaction();
+    session.endSession();
+
+    // Re-populate to get updated product info
+    cart = await ShoppingCart.findOne({ customer: customer._id }).populate("items.product");
+    res.json(cart);
+
+  } catch (err) {
+    console.error("❌ Error creating order:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+})
 
 module.exports = router;
