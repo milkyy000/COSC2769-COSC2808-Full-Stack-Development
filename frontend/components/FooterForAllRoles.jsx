@@ -7,6 +7,7 @@
 
 import React from "react";
 import { Container } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
 
 const FooterForAllRoles = () => {
   return (
@@ -14,10 +15,18 @@ const FooterForAllRoles = () => {
       <Container className="text-center">
         <p>© 2025 VeloCart</p>
         <div>
-          <a href="/about" className="text-decoration-none text-light mx-2">About</a>
-          <a href="/privacy" className="text-decoration-none text-light mx-2">Privacy</a>
-          <a href="/help" className="text-decoration-none text-light mx-2">Help</a>
-          <a href="/feedback" className="text-decoration-none text-light mx-2">Feedback</a>
+          <NavLink to="/about" className="text-decoration-none text-light mx-2">
+            About
+          </NavLink>
+          <NavLink to="/privacy" className="text-decoration-none text-light mx-2">
+            Privacy
+          </NavLink>
+          <NavLink to="/help" className="text-decoration-none text-light mx-2">
+            Help
+          </NavLink>
+          <NavLink to="/feedback" className="text-decoration-none text-light mx-2">
+            Feedback
+          </NavLink>
         </div>
       </Container>
     </footer>
