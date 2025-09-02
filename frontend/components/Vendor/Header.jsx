@@ -16,7 +16,7 @@ import { ThemeContext } from "../../src/ThemeContext";
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { theme, toggleTheme, setDark } = useContext(ThemeContext); 
+  const { theme, toggleTheme, setDark } = useContext(ThemeContext);
   const handleLogout = async () => {
     try {
       await axios.post("http://localhost:5000/api/auth/logout", {}, { withCredentials: true });
@@ -35,7 +35,7 @@ const Header = () => {
       expand="lg"
     >
       <Container>
-        <Navbar.Brand href="/view-products" className="d-flex align-items-center">
+        <Navbar.Brand as={NavLink} to="/view-products" className="d-flex align-items-center">
           <img
             src="/Logo.png"
             alt="VeloCart Logo"

@@ -35,7 +35,7 @@ const Header = () => {
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container>
-        <Navbar.Brand href="/customerProductView" className="d-flex align-items-center">
+        <Navbar.Brand as={NavLink} to="/customerProductView" className="d-flex align-items-center">
           <img
             src="/Logo.png"
             alt="VeloCart Logo"
