@@ -5,7 +5,7 @@
 // Author: Tran Quy Duc
 // ID: s4070049
 
-import React, { useContext } from "react";  
+import React, { useContext } from "react";
 import axios from "axios";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -17,14 +17,14 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
- 
+
   const { theme, toggleTheme, setDark } = useContext(ThemeContext);
 
   const handleLogout = async () => {
     try {
       await axios.post("http://localhost:5000/api/auth/logout", {}, { withCredentials: true });
       dispatch(logoutSuccess());
-      setDark(); 
+      setDark();
       navigate("/");
     } catch (err) {
       console.error("Logout error:", err);
@@ -34,9 +34,9 @@ const Header = () => {
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container>
-        <Navbar.Brand href="/shipper/orders" className="d-flex align-items-center">
+        <Navbar.Brand as={NavLink} to="/shipper/orders" className="d-flex align-items-center">
           <img
-            src="/Logo.png"   
+            src="/Logo.png"
             alt="VeloCart Logo"
             width="40"
             height="40"

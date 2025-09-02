@@ -84,7 +84,7 @@ router.get('/:userId/shoppingCart', async (req, res) => {
     res.json(cart);
   } catch (err) {
     console.error('❌ Failed to load shopping cart:', err);
-    res.status(500).json({ error: 'Failed to load shopping cart: Item already in cart' });
+    res.status(500).json({ error: 'Failed to load shopping cart' });
   }
 })
 
