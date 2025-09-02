@@ -15,6 +15,9 @@ export default function OrderDetail() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { selectedOrder, loading, error } = useSelector((s) => s.shipper);
+  useEffect(() => {
+    document.title = "Order Details | VeloCart";
+  }, []);
 
   useEffect(() => {
     dispatch(fetchShipperOrderById(id));

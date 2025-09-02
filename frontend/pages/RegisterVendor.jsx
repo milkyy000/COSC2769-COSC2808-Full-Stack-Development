@@ -5,13 +5,18 @@
 // Author: Tran Huu Viet Hung
 // ID: s3975170
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { fetchMyAccount, registerUser } from "../src/redux/authSlice";
 import "./css/RegisterVendor.css"; // ✅ Custom styles
 
 export default function RegisterVendor() {
+
+  useEffect(() => {
+    document.title = "Vendor Register | VeloCart";
+  }, []);
+  
   const dispatch = useDispatch();
   const [form, setForm] = useState({
     role: "vendor",

@@ -15,6 +15,9 @@ export default function ShipOrders() {
   const dispatch = useDispatch();
   const { orders, loading, error } = useSelector((state) => state.shipper);
   const user = useSelector((state) => state.auth.user);
+  useEffect(() => {
+    document.title = "Orders | VeloCart";
+  }, []);
 
   useEffect(() => {
     dispatch(fetchShipperOrders());

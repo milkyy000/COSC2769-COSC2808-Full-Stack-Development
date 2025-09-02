@@ -5,13 +5,17 @@
 // Author: Tran Quy Duc
 // ID: s4070049
 import React from "react";
+import { useEffect } from "react";
 
 const About = () => {
+  useEffect(() => {
+    document.title = "About | VeloCart";
+  }, []);
   return (
     <div className="container mt-4">
       <h1>About Us</h1>
       <p>
-        This website is a simplified e-commerce platform developed for learning
+        VeloCart is a simplified e-commerce platform developed for learning
         purposes in the Full Stack Development course at RMIT University Vietnam.
       </p>
       <p>

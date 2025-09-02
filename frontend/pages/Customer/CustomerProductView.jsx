@@ -22,6 +22,10 @@ const CustomerProductView = () => {
     const [minPrice, setMinPrice] = useState("");
     const [maxPrice, setMaxPrice] = useState("");
 
+    useEffect(() => {
+        document.title = "Product View | VeloCart";
+    }, []);
+
     const fetchProducts = async () => {
         setLoading(true);
         setError("");

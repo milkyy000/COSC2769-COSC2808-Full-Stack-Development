@@ -5,23 +5,29 @@
 // Author: Tran Quy Duc
 // ID: s4070049
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Container, Form, Button, Alert } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { authSelect } from "../../src/redux/authSlice"; 
+import { authSelect } from "../../src/redux/authSlice";
 import "../css/AddProduct.css"
 
 const AddProduct = () => {
+
+  useEffect(() => {
+    document.title = "Add Product | VeloCart";
+  }, []);
+
   const user = useSelector(authSelect.user);
   const [form, setForm] = useState({
     name: "",
     price: "",
     description: "",
-    image: null, 
+    image: null,
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
 
   const handleAddProduct = async (e) => {
     e.preventDefault();

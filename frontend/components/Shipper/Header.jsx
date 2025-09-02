@@ -27,7 +27,15 @@ const Header = () => {
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container>
-        <Navbar.Brand href="/shipper/orders">🚚 Shipper Portal</Navbar.Brand>
+        <Navbar.Brand href="/shipper/orders" className="d-flex align-items-center">
+          <img
+            src="../../Logo.png"
+            alt="VeloCart Logo"
+            width="40"
+            height="40"
+            className="d-inline-block align-top"
+          />Velo Cart
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">

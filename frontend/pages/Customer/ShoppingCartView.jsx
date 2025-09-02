@@ -9,6 +9,9 @@ export default function ShoppingCartView() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    document.title = "Shopping Cart | VeloCart";
+  }, []);
   // fetch the shopping cart
   const fetchShoppingCart = async () => {
     if (!user?._id) return;
@@ -60,7 +63,7 @@ export default function ShoppingCartView() {
     try {
       const res = await axios.post(
         `http://localhost:5000/api/carts/${user._id}/createOrder`,
-        {withCredentials: true}
+        { withCredentials: true }
       );
       setShoppingCart(res.data);
       console.log("created order shoppingcartview.jsx");

@@ -20,6 +20,10 @@ const CustomerProductDetail = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
+    useEffect(() => {
+        document.title = "Product Detail | VeloCart";
+    }, []);
+
     const fetchProduct = async () => {
         setLoading(true);
         try {

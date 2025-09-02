@@ -5,8 +5,11 @@
 // Author: Tran Quy Duc
 // ID: s4070049
 import React from "react";
-
+import { useEffect } from "react";
 const Feedback = () => {
+  useEffect(() => {
+    document.title = "Feedback | VeloCart";
+  }, []);
   return (
     <div className="container mt-4">
       <h1>User Feedback</h1>

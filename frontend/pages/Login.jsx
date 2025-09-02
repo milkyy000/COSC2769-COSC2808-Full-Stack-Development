@@ -5,7 +5,7 @@
 // Author: Tran Huu Viet Hung
 // ID: s3975170
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginUser, fetchMyAccount } from "../src/redux/authSlice";
@@ -18,6 +18,10 @@ export default function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    document.title = "Login | VeloCart";
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

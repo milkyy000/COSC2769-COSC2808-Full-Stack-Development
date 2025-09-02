@@ -6,8 +6,11 @@
 // ID: s4070049
 
 import React from "react";
-
+import { useEffect } from "react";
 const Help = () => {
+  useEffect(() => {
+    document.title = "Help | VeloCart";
+  }, []);
   return (
     <div className="container mt-4">
       <h1>Help & Support</h1>

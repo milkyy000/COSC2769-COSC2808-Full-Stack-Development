@@ -12,7 +12,7 @@ const FooterForAllRoles = () => {
   return (
     <footer className="bg-dark text-light py-3 mt-auto">
       <Container className="text-center">
-        <p>© 2025</p>
+        <p>© 2025 VeloCart</p>
         <div>
           <a href="/about" className="text-decoration-none text-light mx-2">About</a>
           <a href="/privacy" className="text-decoration-none text-light mx-2">Privacy</a>

@@ -6,8 +6,11 @@
 // ID: s4070049
 
 import React from "react";
-
+import { useEffect } from "react";
 const Privacy = () => {
+  useEffect(() => {
+    document.title = "Privacy | VeloCart";
+  }, []);
   return (
     <div className="container mt-4">
       <h1>Privacy Policy</h1>

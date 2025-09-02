@@ -36,13 +36,17 @@ const ViewMyProducts = () => {
     image: null,
   });
 
+  useEffect(() => {
+    document.title = "My Products | VeloCart";
+  }, []);
+
   const fetchProducts = async () => {
     if (!user?._id) return;
     setLoading(true);
     setError("");
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/vendors/${ user.vendorId}/products`,
+        `http://localhost:5000/api/vendors/${user.vendorId}/products`,
         { withCredentials: true }
       );
       setProducts(res.data);

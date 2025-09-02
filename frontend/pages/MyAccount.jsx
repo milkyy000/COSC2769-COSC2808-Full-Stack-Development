@@ -7,7 +7,7 @@
 
 import { useDispatch, useSelector } from "react-redux";
 import { authSelect, updateProfile } from "../src/redux/authSlice";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Card,
   Button,
@@ -21,6 +21,11 @@ import {
 import "./css/MyAccount.css";
 
 export default function MyAccount() {
+
+  useEffect(() => {
+    document.title = "My Account | VeloCart";
+  }, []);
+
   const user = useSelector(authSelect.user);
   const initialized = useSelector(authSelect.initialized);
   const loading = useSelector(authSelect.loading);
