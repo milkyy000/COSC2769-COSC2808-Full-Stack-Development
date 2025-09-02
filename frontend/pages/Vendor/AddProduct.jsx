@@ -11,7 +11,6 @@ import { Container, Form, Button, Alert } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { authSelect } from "../../src/redux/authSlice";
 import "../css/AddProduct.css"
-
 const AddProduct = () => {
 
   useEffect(() => {

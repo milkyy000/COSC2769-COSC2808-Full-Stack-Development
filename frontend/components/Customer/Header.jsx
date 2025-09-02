@@ -5,24 +5,28 @@
 // Author: Tran Quy Duc
 // ID: s4070049
 
-import React from "react";
+import React, { useContext } from "react";
 import axios from "axios";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 import { authSelect, logoutSuccess } from "../../src/redux/authSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { ThemeContext } from "../../src/ThemeContext";
+
 const Header = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch(); // ✅ create dispatch
-  const user = useSelector(authSelect.user)
+  const dispatch = useDispatch();
+  const user = useSelector(authSelect.user);
+
+  const { theme, toggleTheme, setDark } = useContext(ThemeContext);
 
   const handleLogout = async () => {
     try {
       await axios.post("http://localhost:5000/api/auth/logout", {}, { withCredentials: true });
 
-      dispatch(logoutSuccess()); // ✅ clears Redux user state
-
-      navigate("/"); // ✅ back to login
+      dispatch(logoutSuccess());
+      setDark();
+      navigate("/");
     } catch (err) {
       console.error("Logout error:", err);
     }
@@ -33,16 +37,17 @@ const Header = () => {
       <Container>
         <Navbar.Brand href="/customerProductView" className="d-flex align-items-center">
           <img
-            src="../../Logo.png"
+            src="/Logo.png"
             alt="VeloCart Logo"
             width="40"
             height="40"
-            className="d-inline-block align-top"
+            className="d-inline-block align-top me-2"
           />
-          VeloCart</Navbar.Brand>
+          VeloCart
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto">
+          <Nav className="ms-auto align-items-center">
             <Nav.Link as={NavLink} to="/order-view">
               Orders
             </Nav.Link>
@@ -53,6 +58,18 @@ const Header = () => {
               My Account
             </Nav.Link>
             <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+
+            <button
+              onClick={toggleTheme}
+              className="btn btn-sm ms-3"
+              style={{
+                background: "transparent",
+                border: "1px solid currentColor",
+                color: "inherit",
+              }}
+            >
+              {theme === "light" ? "🌙 Dark" : "☀️ Light"}
+            </button>
           </Nav>
         </Navbar.Collapse>
       </Container>

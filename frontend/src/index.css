@@ -1,0 +1,68 @@
+/* Light mode (default) */
+body[data-theme="light"] {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --table-bg: #ffffff;
+    --table-text: #000000;
+    --table-border: #dee2e6;
+}
+
+/* Dark mode */
+body[data-theme="dark"] {
+    --bg-color: #121212;
+    --text-color: #ffffff;
+    --table-bg: #1e1e1e;
+    /* dark gray background */
+    --table-text: #f1f1f1;
+    /* light text */
+    --table-border: #444444;
+    /* darker borders */
+}
+
+
+/* Apply theme to main body */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+/* Header and Footer: always black with white text */
+.navbar,
+footer {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+}
+
+.navbar a,
+footer a {
+    color: #ffffff !important;
+}
+
+
+/* Bootstrap overrides */
+.card {
+    background-color: var(--card-bg) !important;
+    color: var(--card-text) !important;
+}
+
+.card-title,
+.card-text,
+.card small {
+    color: var(--card-text) !important;
+}
+
+.filter-bar {
+    background-color: var(--card-bg) !important;
+}
+
+.table {
+    background-color: var(--table-bg) !important;
+    color: var(--table-text) !important;
+}
+
+.table td,
+.table th {
+    border-color: var(--table-border) !important;
+    background-color: var(--table-bg) !important;
+    color: var(--table-text) !important;
+}

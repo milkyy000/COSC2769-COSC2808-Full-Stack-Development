@@ -9,6 +9,8 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginUser, fetchMyAccount } from "../src/redux/authSlice";
+import { useContext } from "react";
+import { ThemeContext } from "../src/ThemeContext";
 import "./css/Login.css"
 
 export default function Login() {
@@ -18,6 +20,8 @@ export default function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { setLight } = useContext(ThemeContext);
+
 
   useEffect(() => {
     document.title = "Login | VeloCart";
@@ -33,7 +37,7 @@ export default function Login() {
       if (res.user?.id) {
         const loggedInUser = res.user;
         setUser(loggedInUser);
-
+        setLight();
         switch (loggedInUser.role) {
           case "customer":
             navigate("/customerProductView");
@@ -46,6 +50,7 @@ export default function Login() {
             break;
           default:
             navigate("/");
+
         }
       } else {
         setError("Login failed");
