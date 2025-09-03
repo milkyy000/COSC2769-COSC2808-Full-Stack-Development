@@ -85,12 +85,18 @@ export default function ShoppingCartView() {
 
   if (loading) return <p>Loading cart...</p>;
   if (error) return <p>{error}</p>;
-  if (!shoppingCart || shoppingCart.items?.length === 0) return <p>Your cart is empty.</p>;
+  if (!shoppingCart || shoppingCart.items?.length === 0) return <p className="text-center my-3">Your shopping cart is empty</p>
 
   return (
     <div className="container mt-4">
       <h2 className="d-inline-block me-2" >Your Shopping Cart</h2>
       <button className="btn btn-success align-middle mb-2" onClick={() => handleOrder()}>🛒 Create order 🛒</button>
+      <br />
+      <strong>Total:</strong>{" "}
+      {shoppingCart.items.reduce(
+        (s, item) => s + Number(item.product.price) * Number(item.quantity),
+        0
+      )} $
       <ul className="list-group">
         {shoppingCart.items.map((item) => (
           <li

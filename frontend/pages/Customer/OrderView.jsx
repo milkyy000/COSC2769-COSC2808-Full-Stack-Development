@@ -52,38 +52,42 @@ export default function OrderView() {
 
     return (
         <>
-            <ListGroup>
-                {orders.map((order) => (
-                    <ListGroup.Item
-                        key={order._id}
-                        className="order d-flex justify-content-between align-items-center"
-                    >
-                        <div>
-                            <strong>Order created at:</strong>{" "}
-                            {new Date(order.createdAt).toLocaleString()} <br />
-                            <strong>Distribution hub:</strong> {order.distributionHub.name} -{" "}
-                            {order.distributionHub.address}
-                            <br />
-                            <span className={`
-                                d-inline-block px-3 py-1 rounded text-light pb-2 my-1
-                                ${order.status === 'active' ? "bg-primary" : ""}
-                                ${order.status === 'delivered' ? "bg-success" : ""}
-                                ${order.status === 'canceled' ? "bg-danger" : ""}
-                            `}>
-                                {order.status}
-                            </span>
-                        </div>
-
-                        <Button
-                            variant="primary"
-                            size="sm"
-                            onClick={() => handleShow(order)}
+            {orders.length === 0 ? (
+                <p className="text-center my-3">You have no orders</p>
+            ) : (
+                <ListGroup>
+                    {orders.map((order) => (
+                        <ListGroup.Item
+                            key={order._id}
+                            className="order d-flex justify-content-between align-items-center"
                         >
-                            View Items
-                        </Button>
-                    </ListGroup.Item>
-                ))}
-            </ListGroup>
+                            <div>
+                                <strong>Order created at:</strong>{" "}
+                                {new Date(order.createdAt).toLocaleString()} <br />
+                                <strong>Distribution hub:</strong> {order.distributionHub.name} -{" "}
+                                {order.distributionHub.address}
+                                <br />
+                                <strong>Total:</strong>{" "}
+                                {order.items.reduce((s, item) => s + item.price * item.quantity, 0)} $<br />
+                                <span
+                                    className={`
+                  d-inline-block px-3 py-1 rounded text-light pb-2 my-1
+                  ${order.status === "active" ? "bg-primary" : ""}
+                  ${order.status === "delivered" ? "bg-success" : ""}
+                  ${order.status === "canceled" ? "bg-danger" : ""}
+                `}
+                                >
+                                    {order.status}
+                                </span>
+                            </div>
+
+                            <Button variant="primary" size="sm" onClick={() => handleShow(order)}>
+                                View Items
+                            </Button>
+                        </ListGroup.Item>
+                    ))}
+                </ListGroup>
+            )}
 
             {/* Modal */}
             {selectedOrder && (
@@ -125,5 +129,6 @@ export default function OrderView() {
                 </Modal>
             )}
         </>
-    )
+    );
+
 }
