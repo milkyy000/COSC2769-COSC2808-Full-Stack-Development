@@ -95,7 +95,7 @@ export default function ShoppingCartView() {
         {shoppingCart.items.map((item) => (
           <li
             key={item.product._id}
-            className="list-group-item d-flex justify-content-between align-items-center border rounded p-2 mb-2 shadow-sm"
+            className="cartItem list-group-item d-flex justify-content-between align-items-center border rounded p-2 mb-2 shadow-sm"
           >
             {/* Product Image */}
             <img
@@ -114,7 +114,7 @@ export default function ShoppingCartView() {
             {/* Quantity Controls */}
             <div className="d-flex align-items-center">
               <button
-                className="btn btn-sm btn-outline-secondary mx-1"
+                className=" btn btn-sm btn-outline-secondary mx-1"
                 onClick={() => updateQuantity(item.product._id, item.quantity - 1)}
               >
                 -

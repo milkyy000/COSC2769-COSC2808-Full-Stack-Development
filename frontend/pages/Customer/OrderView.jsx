@@ -56,14 +56,14 @@ export default function OrderView() {
                 {orders.map((order) => (
                     <ListGroup.Item
                         key={order._id}
-                        className="d-flex justify-content-between align-items-center"
+                        className="order d-flex justify-content-between align-items-center"
                     >
                         <div>
                             <strong>Order created at:</strong>{" "}
                             {new Date(order.createdAt).toLocaleString()} <br />
                             <strong>Distribution hub:</strong> {order.distributionHub.name} -{" "}
                             {order.distributionHub.address}
-<br />
+                            <br />
                             <span className={`
                                 d-inline-block px-3 py-1 rounded text-light pb-2 my-1
                                 ${order.status === 'active' ? "bg-primary" : ""}
