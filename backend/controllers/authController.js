@@ -53,6 +53,16 @@ exports.register = async (req, res) => {
             if (!businessAddress || businessAddress.length < 5) {
                 return handleValidateError(session, res, "Business address required, min 5 chars");
             }
+            // Check duplicate business name
+            const existName = await Vendor.findOne({ businessName });
+            if (existName) {
+                return handleValidateError(session, res, "Business name already exists");
+            }
+            // Check duplicate business address
+            const existAddress = await Vendor.findOne({ businessAddress });
+            if (existAddress) {
+                return handleValidateError(session, res, "Business address already exists");
+            }
         }
         else if (role === "shipper") {
             if (!distributionHub) {
