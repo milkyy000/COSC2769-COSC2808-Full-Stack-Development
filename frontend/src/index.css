@@ -66,3 +66,17 @@ footer a {
     background-color: var(--table-bg) !important;
     color: var(--table-text) !important;
 }
+
+.order{
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.cartItem{
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.quantityItem{
+    color: var(--text-color) !important;
+}

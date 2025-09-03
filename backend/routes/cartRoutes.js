@@ -1,3 +1,10 @@
+// RMIT University Vietnam
+// Course: COSC2769 - Full Stack Development
+// Semester: 2025B
+// Assessment: Assignment 02
+// Author: Nguyen Bao Toan
+// ID: s4045102
+
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
@@ -80,7 +87,14 @@ router.get('/:userId/shoppingCart', async (req, res) => {
   try {
     const { userId } = req.params;
     const customer = await Customer.findOne({ user: userId });
-    const cart = await ShoppingCart.findOne({ customer: customer._id }).populate("items.product");
+    let cart = await ShoppingCart.findOne({ customer: customer._id }).populate("items.product");
+    if(!cart){
+      cart = new ShoppingCart ({
+        customer:customer._id,
+        items:[]
+      });
+      await cart.save();
+    }
     res.json(cart);
   } catch (err) {
     console.error('❌ Failed to load shopping cart:', err);
