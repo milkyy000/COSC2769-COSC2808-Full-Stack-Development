@@ -2,12 +2,24 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { authSelect } from "../../src/redux/authSlice";
 import axios from "axios";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button, Modal, ListGroup, Image } from "react-bootstrap";
 
 export default function OrderView() {
     const user = useSelector(authSelect.user);
-    const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+
+    const [orders, setOrders] = useState([]);
+    const [selectedOrder, setSelectedOrder] = useState(null);
+    const [show, setShow] = useState(false);
+
+    const handleShow = (order) => {
+        setSelectedOrder(order);
+        setShow(true);
+    };
+
+    const handleClose = () => setShow(false);
 
     const fetchOrders = async () => {
         if (!user?._id) return;
@@ -29,11 +41,82 @@ export default function OrderView() {
     }
     useEffect(() => {
         fetchOrders();
-      }, [user]);
+    }, [user]);
 
     return (
         <>
+            <ListGroup>
+                {orders.map((order) => (
+                    <ListGroup.Item
+                        key={order._id}
+                        className="d-flex justify-content-between align-items-center"
+                    >
+                        <div>
+                            <strong>Order created at:</strong>{" "}
+                            {new Date(order.createdAt).toLocaleString()} <br />
+                            <strong>Distribution hub:</strong> {order.distributionHub.name} -{" "}
+                            {order.distributionHub.address}
+<br />
+                            <span className={`
+                                d-inline-block px-3 py-1 rounded text-light pb-2 my-1
+                                ${order.status === 'active' ? "bg-primary" : ""}
+                                ${order.status === 'deliverd' ? "bg-success" : ""}
+                                ${order.status === 'canceled' ? "bg-danger" : ""}
+                            `}>
+                                {order.status}
+                            </span>
+                        </div>
 
+                        <Button
+                            variant="primary"
+                            size="sm"
+                            onClick={() => handleShow(order)}
+                        >
+                            View Items
+                        </Button>
+                    </ListGroup.Item>
+                ))}
+            </ListGroup>
+
+            {/* Modal */}
+            {selectedOrder && (
+                <Modal show={show} onHide={handleClose} size="lg" centered>
+                    <Modal.Header closeButton>
+                        <Modal.Title>
+                            Order from {selectedOrder.distributionHub.name}
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <ListGroup>
+                            {selectedOrder.items.map((item) => (
+                                <ListGroup.Item
+                                    key={item._id}
+                                    className="d-flex align-items-center gap-3"
+                                >
+                                    <Image
+                                        src={`http://localhost:5000/uploads/${item.product.image || "default.png"}`}
+                                        alt={item.product.name}
+                                        thumbnail
+                                        rounded
+                                    />
+                                    <div className="flex-grow-1">
+                                        <strong>{item.product.name}</strong> - ${item.price} <br />
+                                        <small className="text-muted">
+                                            Vendor: {item.product.vendor.businessName}
+                                        </small>
+                                        <p className="fw-light">Quantity: {item.quantity}</p>
+                                    </div>
+                                </ListGroup.Item>
+                            ))}
+                        </ListGroup>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Close
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+            )}
         </>
     )
 }

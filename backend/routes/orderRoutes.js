@@ -21,12 +21,17 @@ router.get("/:userId", async (req, res) => {
         const orders = await Order.find({ customer: customer._id })
             .populate("customer")
             .populate("distributionHub")
-            .populate("items.product");
+            .populate({
+                path:"items.product",
+                populate: ({
+                    path:"vendor"
+                })
+            });
         res.json(orders);
     } catch (err) {
         console.error('❌ Failed to load orders:', err);
         res.status(500).json({ error: 'Failed to fetch orders.' });
     }
-});
+}); 
 
 module.exports = router;
