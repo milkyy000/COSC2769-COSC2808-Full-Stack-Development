@@ -60,7 +60,7 @@ export default function OrderView() {
                             <span className={`
                                 d-inline-block px-3 py-1 rounded text-light pb-2 my-1
                                 ${order.status === 'active' ? "bg-primary" : ""}
-                                ${order.status === 'deliverd' ? "bg-success" : ""}
+                                ${order.status === 'delivered' ? "bg-success" : ""}
                                 ${order.status === 'canceled' ? "bg-danger" : ""}
                             `}>
                                 {order.status}
