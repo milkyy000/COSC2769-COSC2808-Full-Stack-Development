@@ -28,7 +28,7 @@ export default function RegisterShipper() {
     const [error, setError] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
     const navigate = useNavigate();
-    const provinces = ["Ha Noi", "Ho Chi Minh", "Đa Nang", "Hai Phong", "Can Tho", "Hue", "Nha Trang"];
+    const provinces = ["Ha Noi", "Ho Chi Minh", "Da Nang", "Hai Phong", "Can Tho", "Hue", "Nha Trang"];
 
     const handleSubmit = async (e) => {
         e.preventDefault();
