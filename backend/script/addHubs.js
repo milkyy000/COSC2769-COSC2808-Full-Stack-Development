@@ -18,7 +18,7 @@ async function main() {
     const hubs = [
       { name: 'Ha Noi', address: 'Ha Noi city center' },
       { name: 'Ho Chi Minh', address: 'Ho Chi Minh city center' },
-      { name: 'Đa Nang', address: 'Da Nang city center' },
+      { name: 'Da Nang', address: 'Da Nang city center' },
       { name: 'Hai Phong', address: 'Hai Phong city center' },
       { name: 'Can Tho', address: 'Can Tho city center' },
       { name: 'Hue', address: 'Hue city center' },
