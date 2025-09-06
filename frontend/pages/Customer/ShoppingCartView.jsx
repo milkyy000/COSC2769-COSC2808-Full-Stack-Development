@@ -105,7 +105,7 @@ export default function ShoppingCartView() {
           >
             {/* Product Image */}
             <img
-              src={`http://localhost:5000/uploads/${item.product.image || "default.png"}`}
+              src={`http://localhost:5000/uploads/${item.product.image || "default_product.png"}`}
               alt={item.product.name}
               className="img-thumbnail me-3"
               style={{ width: "80px", height: "80px", objectFit: "cover" }}
