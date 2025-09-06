@@ -10,7 +10,7 @@ export const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
     // default dark before login
-    const [theme, setTheme] = useState("dark");
+    const [theme, setTheme] = useState("light");
 
     useEffect(() => {
         document.body.setAttribute("data-theme", theme);

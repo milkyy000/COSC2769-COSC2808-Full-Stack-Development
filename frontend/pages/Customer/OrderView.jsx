@@ -99,26 +99,33 @@ export default function OrderView() {
                     </Modal.Header>
                     <Modal.Body>
                         <ListGroup>
-                            {selectedOrder.items.map((item) => (
-                                <ListGroup.Item
-                                    key={item._id}
-                                    className="d-flex align-items-center gap-3"
-                                >
-                                    <Image
-                                        src={`http://localhost:5000/uploads/${item.product.image || "default.png"}`}
-                                        alt={item.product.name}
-                                        thumbnail
-                                        rounded
-                                    />
-                                    <div className="flex-grow-1">
-                                        <strong>{item.product.name}</strong> - ${item.price} <br />
-                                        <small className="text-muted">
-                                            Vendor: {item.product.vendor.businessName}
-                                        </small>
-                                        <p className="fw-light">Quantity: {item.quantity}</p>
-                                    </div>
-                                </ListGroup.Item>
-                            ))}
+                            {selectedOrder.items.map((item) => {
+                                const product = item.product || {}; // fallback to empty object if null
+                                const imageSrc = `http://localhost:5000/uploads/${product.image || "default.png"}`;
+                                const productName = product.name || "Unnamed product";
+                                const vendorName = product.vendor?.businessName || "Unknown vendor";
+
+                                return (
+                                    <ListGroup.Item
+                                        key={item._id}
+                                        className="d-flex align-items-center gap-3"
+                                    >
+                                        <Image
+                                            src={imageSrc}
+                                            alt={productName}
+                                            thumbnail
+                                            rounded
+                                        />
+                                        <div className="flex-grow-1">
+                                            <strong>{productName}</strong> - ${item.price} <br />
+                                            <small className="text-muted">
+                                                Vendor: {vendorName}
+                                            </small>
+                                            <p className="fw-light">Quantity: {item.quantity}</p>
+                                        </div>
+                                    </ListGroup.Item>
+                                );
+                            })}
                         </ListGroup>
                     </Modal.Body>
                     <Modal.Footer>
