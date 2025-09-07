@@ -37,10 +37,11 @@ export default function ShipOrders() {
             <Col key={order._id} md={6} lg={4}>
               <Card>
                 <Card.Body>
-                  <Card.Title>Order #{index + 1}</Card.Title>
+                  <Card.Title>Order</Card.Title>
                   <Card.Subtitle className="mb-2 text-muted">
                     Customer: {order.customer?.user?.username || "Unknown"}
                   </Card.Subtitle>
+                  <hr />
                   <Card.Text>
                     Items: {order.items.length} <br />
                     Total: {total.toLocaleString()}$ <br />

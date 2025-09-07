@@ -43,7 +43,6 @@ export default function OrderDetail() {
   return (
     <Container>
       <h3>Order Details</h3>
-      <p><strong>Order id:</strong> {order._id}</p>
       <p><strong>Customer:</strong> {order.customer?.user?.username} </p>
       <p><strong>Receiver address:</strong> {order.customer?.address || "N/A"}</p>
 
