@@ -44,7 +44,7 @@ export default function ShipOrders() {
                   <hr />
                   <Card.Text>
                     Items: {order.items.length} <br />
-                    Total: {total.toLocaleString()}$ <br />
+                    Total: {total.toLocaleString()}$<br />
                     Ordered: {new Date(order.createdAt).toLocaleString()}
                   </Card.Text>
                   <Link to={`/shipper/orders/${order._id}`}>
