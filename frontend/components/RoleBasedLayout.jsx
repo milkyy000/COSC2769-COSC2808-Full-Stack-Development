@@ -7,16 +7,16 @@ import ShipperLayout from "./Shipper/ShipperLayout";
 export default function RoleBaseLayout({ children }) {
     const user = useSelector(authSelect.user);
     if (!user) {
-        return <Layout>{children}</Layout>
+        return <div>{children}</div>
     }
     switch (user.role) {
         case "customer":
             return <CustomerLayout>{children}</CustomerLayout>
         case "vendor":
             return <VendorLayout>{children}</VendorLayout>
-       case "shipper":
+        case "shipper":
             return <ShipperLayout>{children}</ShipperLayout>
         default:
-            return <Layout>{children}</Layout>;
+            return <div>{children}</div>;
     }
 }

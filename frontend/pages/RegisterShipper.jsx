@@ -9,13 +9,15 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { fetchMyAccount, registerUser } from "../src/redux/authSlice";
-import "./css/RegisterShipper.css"; // ✅ import namespaced CSS
+import { useContext } from "react";
+import { ThemeContext } from "../src/ThemeContext";
+import "./css/RegisterShipper.css";
 
 export default function RegisterShipper() {
 
     useEffect(() => {
-    document.title = "Shipper Register | VeloCart";
-  }, []);
+        document.title = "Shipper Register | VeloCart";
+    }, []);
 
     const dispatch = useDispatch();
     const [form, setForm] = useState({
@@ -29,6 +31,7 @@ export default function RegisterShipper() {
     const [successMsg, setSuccessMsg] = useState("");
     const navigate = useNavigate();
     const provinces = ["Ha Noi", "Ho Chi Minh", "Da Nang", "Hai Phong", "Can Tho", "Hue", "Nha Trang"];
+    const { setLight } = useContext(ThemeContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -44,6 +47,7 @@ export default function RegisterShipper() {
             const res = await dispatch(registerUser(form)).unwrap();
             setSuccessMsg(res.msg);
             if (res.msg === "Registration successful") {
+                setLight();
                 setTimeout(() => navigate("/shipper/orders"), 1000);
             }
         } catch (err) {
