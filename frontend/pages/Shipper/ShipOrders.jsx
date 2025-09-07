@@ -38,12 +38,12 @@ export default function ShipOrders() {
               <Card>
                 <Card.Body>
                   <Card.Title>Order #{index + 1}</Card.Title>
-                  <Card.Subtitle className="mb-2 text-muted">
+                  <Card.Subtitle className="mb-2">
                     Customer: {order.customer?.user?.username || "Unknown"}
                   </Card.Subtitle>
                   <Card.Text>
                     Items: {order.items.length} <br />
-                    Total: {total.toLocaleString()}$ <br />
+                    Total: {total.toLocaleString()}$<br />
                     Ordered: {new Date(order.createdAt).toLocaleString()}
                   </Card.Text>
                   <Link to={`/shipper/orders/${order._id}`}>
