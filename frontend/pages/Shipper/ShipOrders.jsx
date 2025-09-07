@@ -38,7 +38,7 @@ export default function ShipOrders() {
               <Card>
                 <Card.Body>
                   <Card.Title>Order</Card.Title>
-                  <Card.Subtitle className="mb-2 text-muted">
+                  <Card.Subtitle className="mb-2">
                     Customer: {order.customer?.user?.username || "Unknown"}
                   </Card.Subtitle>
                   <hr />
