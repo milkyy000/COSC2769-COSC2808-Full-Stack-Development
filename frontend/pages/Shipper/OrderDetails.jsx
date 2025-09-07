@@ -59,13 +59,13 @@ export default function OrderDetail() {
               <td>{it.product?.name || "—"}</td>
               <td>{it.quantity}</td>
               <td>{it.price?.toLocaleString() ?? "0"}</td>
-              <td>{(it.price * it.quantity).toLocaleString()}</td>
+              <td>{(it.price * it.quantity).toLocaleString()}$</td>
             </tr>
           ))}
         </tbody>
       </Table>
 
-      <h5>Total: {total.toLocaleString()}</h5>
+      <h5>Total: {total.toLocaleString()}$</h5>
 
       <div className="d-flex gap-2">
         <Button variant="success" onClick={() => handleUpdate("delivered")}>Mark as Delivered</Button>

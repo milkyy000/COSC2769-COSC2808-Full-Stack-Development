@@ -37,13 +37,13 @@ export default function ShipOrders() {
             <Col key={order._id} md={6} lg={4}>
               <Card>
                 <Card.Body>
-                  <Card.Title>Order #{order._id.slice(-6)}</Card.Title>
-                  <Card.Subtitle className="mb-2">
+                  <Card.Title>Order #{index + 1}</Card.Title>
+                  <Card.Subtitle className="mb-2 text-muted">
                     Customer: {order.customer?.user?.username || "Unknown"}
                   </Card.Subtitle>
                   <Card.Text>
                     Items: {order.items.length} <br />
-                    Total: {total.toLocaleString()} <br />
+                    Total: {total.toLocaleString()}$ <br />
                     Ordered: {new Date(order.createdAt).toLocaleString()}
                   </Card.Text>
                   <Link to={`/shipper/orders/${order._id}`}>
