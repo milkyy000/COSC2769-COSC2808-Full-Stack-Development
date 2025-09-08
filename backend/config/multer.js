@@ -11,20 +11,31 @@ const fs = require("fs");
 
 const uploadDir = path.join(__dirname, "..", "uploads");
 
-// Ensure uploads folder exists
+//Ensure uploads folder exists
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
 
+// Storage config
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, uploadDir); // ✅ backend/uploads
+    cb(null, uploadDir); // backend/uploads
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));
   },
 });
 
-const upload = multer({ storage });
+// File filter (only allow images)
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith("image/")) {
+    cb(null, true);
+  } else {
+    cb(new Error("❌ Only image files are allowed"), false);
+  }
+};
+
+// Multer instance
+const upload = multer({ storage, fileFilter });
 
 module.exports = upload;

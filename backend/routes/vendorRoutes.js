@@ -12,7 +12,7 @@ const upload = require("../config/multer");
 const fs = require("fs");
 const path = require("path");
 
-// ✅ GET all products for a vendor
+// GET all products for a vendor
 router.get('/:vendorId/products', async (req, res) => {
   try {
     const products = await Product.find({ vendor: req.params.vendorId });
@@ -45,7 +45,7 @@ router.post("/:vendorId/products", upload.single("image"), async (req, res) => {
       name,
       price,
       description,
-      image: req.file ? req.file.filename : null, // ✅ only save filename
+      image: req.file ? req.file.filename : null, //only save filename
     });
 
     await product.save();
@@ -67,7 +67,7 @@ router.post("/:vendorId/products", upload.single("image"), async (req, res) => {
   }
 });
 
-// ✅ PUT update a product (with file upload, only by vendor who owns it)
+// PUT update a product (with file upload, only by vendor who owns it)
 router.put('/:vendorId/products/:productId', upload.single("image"), async (req, res) => {
   try {
     const { name, price, description } = req.body;
@@ -130,7 +130,7 @@ router.put('/:vendorId/products/:productId', upload.single("image"), async (req,
 });
 
 
-// ✅ DELETE remove a product (only by vendor who owns it + delete image file)
+// DELETE remove a product (only by vendor who owns it + delete image file)
 router.delete('/:vendorId/products/:productId', async (req, res) => {
   try {
     const product = await Product.findOneAndDelete({
