@@ -21,7 +21,6 @@ import {
 import "./css/MyAccount.css";
 
 export default function MyAccount() {
-
   useEffect(() => {
     document.title = "My Account | VeloCart";
   }, []);
@@ -56,14 +55,10 @@ export default function MyAccount() {
         });
         break;
       case "shipper":
-        setFormData({
-
-        });
+        setFormData({});
         break;
       default:
-        setFormData({
-
-        });
+        setFormData({});
     }
     setProfilePic(null);
     setShowModal(true);
@@ -72,7 +67,16 @@ export default function MyAccount() {
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "profilePic") {
-      setProfilePic(files[0]);
+      const file = files[0];
+      if (file) {
+        // ✅ Ensure only images are accepted
+        if (!file.type.startsWith("image/")) {
+          alert("❌ Please upload an image file (jpg, png, gif). Videos are not allowed.");
+          e.target.value = null; // reset input
+          return;
+        }
+        setProfilePic(file);
+      }
     } else {
       setFormData({ ...formData, [name]: value });
     }
@@ -86,13 +90,15 @@ export default function MyAccount() {
     if (profilePic) formDataToSend.append("profilePic", profilePic);
 
     try {
-      await dispatch(updateProfile({ id: user._id, formData: formDataToSend }));
+      await dispatch(updateProfile({ id: user._id, formData: formDataToSend })).unwrap();
       alert("✅ Account updated successfully!");
       setShowModal(false);
     } catch (err) {
-      alert("❌ Failed to update account");
+      const errorMessage = err?.error || err?.message || "❌ Failed to update account";
+      alert(errorMessage);
     }
   };
+
 
   return (
     <Container className="myaccount-background py-5 mt-5">
@@ -155,6 +161,7 @@ export default function MyAccount() {
               <Form.Control
                 type="file"
                 name="profilePic"
+                accept="image/png, image/jpeg, image/jpg, image/gif" // ✅ only allow images
                 onChange={handleChange}
                 className="myaccount-form-input"
               />
