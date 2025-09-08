@@ -49,76 +49,88 @@ const Router = createBrowserRouter([
   {
     path: "/view-products",
     element: (
-
-      <Layout>
-        <ViewMyProducts />
-      </Layout>
-
+      <RequireAuth>
+        <Layout>
+          <ViewMyProducts />
+        </Layout>
+      </RequireAuth>
     ),
     errorElement: <NotFound />,
   },
   {
     path: "/add-product",
     element: (
-
-      <Layout>
-        <AddProduct />
-      </Layout>
-
+      <RequireAuth>
+        <Layout>
+          <AddProduct />
+        </Layout>
+      </RequireAuth>
     ),
     errorElement: <NotFound />,
   },
   {
     path: "/customerProductView",
     element: (
-      <CustomerLayout>
-        <CustomerProductView />
-      </CustomerLayout>
+      <RequireAuth>
+        <CustomerLayout>
+          <CustomerProductView />
+        </CustomerLayout>
+      </RequireAuth>
     ),
     errorElement: <NotFound />,
   },
   {
     path: "/customerProductDetail/:id",
     element: (
-      <CustomerLayout>
-        <CustomerProductDetail />
-      </CustomerLayout>
+      <RequireAuth>
+        <CustomerLayout>
+          <CustomerProductDetail />
+        </CustomerLayout>
+      </RequireAuth>
     ),
     errorElement: <NotFound />,
   },
   {
     path: "/shopping-cart",
     element: (
-      <CustomerLayout>
-        <ShoppingCartView />
-      </CustomerLayout>
+      <RequireAuth>
+        <CustomerLayout>
+          <ShoppingCartView />
+        </CustomerLayout>
+      </RequireAuth>
     ),
     errorElement: <NotFound />,
   },
   {
     path: "/order-view",
     element: (
-      <CustomerLayout>
-        <OrderView/>
-      </CustomerLayout>
+      <RequireAuth>
+        <CustomerLayout>
+          <OrderView />
+        </CustomerLayout>
+      </RequireAuth>
     ),
     errorElement: <NotFound />,
   },
   {
     path: "/shipper/orders",
     element: (
-      <RoleBaseLayout>
-        <ShipOrders />
-      </RoleBaseLayout>
+      <RequireAuth>
+        <RoleBaseLayout>
+          <ShipOrders />
+        </RoleBaseLayout>
+      </RequireAuth>
     ),
     errorElement: <NotFound />,
   },
   {
     path: "/shipper/orders/:id",
     element: (
-      <RoleBaseLayout>
-        <OrderDetail />
-      </RoleBaseLayout>
+      <RequireAuth>
+        <RoleBaseLayout>
+          <OrderDetail />
+        </RoleBaseLayout>
+      </RequireAuth>
     ),
     errorElement: <NotFound />,
   },
