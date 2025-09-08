@@ -136,7 +136,7 @@ const CustomerProductView = () => {
                 ))}
             </Row>
 
-            {!loading && products.length === 0 && <p>No products found.</p>}
+            {!loading && products.length === 0 && <p>No products found</p>}
         </Container>
     );
 };
