@@ -22,11 +22,11 @@ exports.getActiveOrders = async (req, res) => {
     const err = ensureShipper(req, res);
     if (err) return;
 
-   
+
     const shipper = await Shipper.findOne({ user: req.session.user.id });
     if (!shipper) return res.status(404).json({ msg: "Shipper profile not found" });
 
-    
+
     const orders = await Order.find({
       distributionHub: shipper.distributionHub,
       status: "active",
@@ -66,7 +66,7 @@ exports.getOrderById = async (req, res) => {
 
     if (!order) return res.status(404).json({ msg: "Order not found" });
 
-    
+
     if (order.distributionHub.toString() !== shipper.distributionHub.toString()) {
       return res.status(403).json({ msg: "Forbidden - order not assigned to your hub" });
     }
