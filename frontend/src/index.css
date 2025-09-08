@@ -12,6 +12,7 @@ body[data-theme="light"] {
     --table-bg: #ffffff;
     --table-text: #000000;
     --table-border: #dee2e6;
+    --box-shadow:#000000;
 }
 
 /* Dark mode */
@@ -24,6 +25,7 @@ body[data-theme="dark"] {
     /* light text */
     --table-border: #444444;
     /* darker borders */
+    --box-shadow:#ffffff;
 }
 
 
@@ -47,9 +49,12 @@ footer a {
 
 
 /* Bootstrap overrides */
+
+
 .card {
     background-color: var(--card-bg) !important;
     color: var(--card-text) !important;
+   box-shadow: 0 4px 10px var(--box-shadow);
 }
 
 .card-title,
