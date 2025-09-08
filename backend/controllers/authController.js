@@ -94,7 +94,7 @@ exports.register = async (req, res) => {
 
             await newCustomer.save({ session });
             //Create cart for customer
-            const newShoppingCart = new ShoppingCart({customer: newCustomer._id, items: []});
+            const newShoppingCart = new ShoppingCart({ customer: newCustomer._id, items: []});
             await newShoppingCart.save({ session });
             extra = { customerId: newCustomer._id, name, address };
         }
@@ -139,10 +139,13 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
     try {
         const { username, password } = req.body;
+      
         const user = await User.findOne({ username });
+     
         if (!user) return res.status(400).json({ msg: "User not found" });
 
         const isMatch = await bcrypt.compare(password, user.passwordHash);
+
         if (!isMatch) return res.status(400).json({ msg: "Wrong password" });
 
         let extra = {};
@@ -157,7 +160,7 @@ exports.login = async (req, res) => {
         }
         else if (user.role === "shipper") {
             const shipper = await Shipper.findOne({ user: user._id }).populate("distributionHub");
-            if (shipper) extra = { distributionHub: shipper.distributionHub.name };
+            if (shipper) extra = { distributionHub: shipper.distributionHub ? shipper.distributionHub.name : null, };
         }
 
         const userResponse = {
@@ -198,7 +201,9 @@ exports.myAccount = async (req, res) => {
     }
     else if (user.role === "shipper") {
         const shipper = await Shipper.findOne({ user: user._id }).populate("distributionHub");
-        if (shipper) extra = { distributionHub: shipper.distributionHub.name };
+        if (shipper) extra = {
+            distributionHub: shipper.distributionHub ? shipper.distributionHub.name : null,
+        };
     }
     res.json({ ...user.toObject(), ...extra });
 };

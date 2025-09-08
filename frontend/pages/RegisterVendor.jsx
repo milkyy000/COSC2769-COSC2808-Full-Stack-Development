@@ -9,14 +9,16 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { fetchMyAccount, registerUser } from "../src/redux/authSlice";
-import "./css/RegisterVendor.css"; // ✅ Custom styles
+import { useContext } from "react";
+import { ThemeContext } from "../src/ThemeContext";
+import "./css/RegisterVendor.css";
 
 export default function RegisterVendor() {
 
   useEffect(() => {
     document.title = "Vendor Register | VeloCart";
   }, []);
-  
+
   const dispatch = useDispatch();
   const [form, setForm] = useState({
     role: "vendor",
@@ -29,6 +31,7 @@ export default function RegisterVendor() {
   const [error, setError] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const navigate = useNavigate();
+  const { setLight } = useContext(ThemeContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,6 +49,7 @@ export default function RegisterVendor() {
 
       if (res.msg === "Registration successful") {
         setTimeout(() => {
+          setLight();
           navigate("/view-products");
         }, 1000);
       }

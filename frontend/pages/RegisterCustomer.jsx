@@ -9,7 +9,9 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { fetchMyAccount, registerUser } from "../src/redux/authSlice";
-import "./css/RegisterCustomer.css"; // ✅ Namespaced styles
+import { useContext } from "react";
+import { ThemeContext } from "../src/ThemeContext";
+import "./css/RegisterCustomer.css";
 
 export default function RegisterCustomer() {
 
@@ -29,33 +31,36 @@ export default function RegisterCustomer() {
   const [error, setError] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const navigate = useNavigate();
+  const { setLight } = useContext(ThemeContext);
 
   const handleSubmit = async (e) => {
-      e.preventDefault();
-      if (!form.username || !form.password) {
-        setError("Username and password are required");
-        return;
+    e.preventDefault();
+    if (!form.username || !form.password) {
+      setError("Username and password are required");
+      return;
+    }
+    setLoading(true);
+    setError("");
+    setSuccessMsg("");
+
+    try {
+      const res = await dispatch(registerUser(form)).unwrap();
+      setSuccessMsg(res.msg);
+
+      if (res.msg === "Registration successful") {
+
+        setTimeout(() => {
+          setLight();
+          navigate("/customerProductView");
+        }, 1000);
       }
-      setLoading(true);
-      setError("");
-      setSuccessMsg("");
-  
-      try {
-        const res = await dispatch(registerUser(form)).unwrap();
-        setSuccessMsg(res.msg);
-  
-        if (res.msg === "Registration successful") {
-          setTimeout(() => {
-            navigate("/customerProductView");
-          }, 1000);
-        }
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-      await dispatch(fetchMyAccount()).unwrap();
-    };
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+    await dispatch(fetchMyAccount()).unwrap();
+  };
 
   return (
     <div className="customer-background">
