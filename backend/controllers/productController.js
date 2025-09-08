@@ -1,9 +1,11 @@
-const User = require("../models/User");
-const Customer = require("../models/Customer");
-const Vendor = require("../models/Vendor");
-const Shipper = require("../models/Shipper");
+// RMIT University Vietnam
+// Course: COSC2769 - Full Stack Development
+// Semester: 2025B
+// Assessment: Assignment 02
+// Author: Tran Quy Duc
+// ID: s4070049
+
 const Product = require('../models/Product')
-const DistributionHub = require("../models/DistributionHub");
 
 exports.getAllProducts = async (req, res) => {
     try {

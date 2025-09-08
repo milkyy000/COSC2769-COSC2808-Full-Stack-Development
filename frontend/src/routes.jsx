@@ -17,7 +17,6 @@ import RegisterShipper from "../pages/RegisterShipper";
 import MyAccount from "../pages/MyAccount";
 import CustomerProductView from "../pages/Customer/CustomerProductView";
 import CustomerProductDetail from "../pages/Customer/CustomerProductDetail";
-import CustomerProfile from "../pages/Customer/CustomerProfile";
 import OrderView from "../pages/Customer/OrderView";
 import CustomerLayout from "../components/Customer/CustomerLayout";
 import RoleBaseLayout from "../components/RoleBasedLayout";
@@ -83,15 +82,6 @@ const Router = createBrowserRouter([
     element: (
       <CustomerLayout>
         <CustomerProductDetail />
-      </CustomerLayout>
-    ),
-    errorElement: <NotFound />,
-  },
-  {
-    path: "/customerProfile",
-    element: (
-      <CustomerLayout>
-        <CustomerProfile />
       </CustomerLayout>
     ),
     errorElement: <NotFound />,

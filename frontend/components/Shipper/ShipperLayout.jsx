@@ -1,3 +1,10 @@
+// RMIT University Vietnam
+// Course: COSC2769 - Full Stack Development
+// Semester: 2025B
+// Assessment: Assignment 02
+// Author: Pham Chau Tan Dat
+// ID: s4069488
+
 import React from "react";
 import Header from "./Header";
 import FooterForAllRoles from "../FooterForAllRoles";
