@@ -55,20 +55,12 @@ npm run dev
 👉 Open http://localhost:5173/
 
 👥 Contribution Table
-| Member Name | Role                             | Assigned Tasks                                                                                                                                                                                                                                                 | Contribution Score |
-| ----------- | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| **Duc**     | Project Manager & Technical Lead | Repo & environment setup, vendor pages, my account (all roles), header/footer (all roles), theme (light/dark mode), feedback & static pages, register/login frontend design + theme, customer product view & details, ERD model, schemas, report contributions | **6.0**            |
-| **Hung**    | Backend Developer                | Register/login backend (all roles), ERD model, schemas, report contributions, presentation slide template                                                                                                                                                      | **5.5**            |
-| **Toan**    | Customer Features Developer      | Cart, add-to-cart, orders (frontend + backend), ERD model, schemas, report contributions                                                                                                                                                                       | **5.0**            |
-| **Dat**     | Shipper Features Developer       | Shipper features (frontend + backend), report contributions                                                                                                                                                                                                    | **3.5**            |
-
-
-## TEST
 | Member Name | Role                             | Assigned Tasks | Contribution Score |               
 |-------------|----------------------------------|----------------|--------------------|
-| **Duc**     | Project Manager & Technical Lead |Repo & environment setup, vendor pages, my account (all roles), header/footer (all roles), theme (light/dark mode), feedback & static pages, register/login frontend design + theme, customer product view & details, ERD model, schemas, report contributions | **6.0** |
-| **Hung**    | Backend Developer                | Register/login backend (all roles), ERD model, schemas, report contributions, presentation slide | **5.5** |
-| **Toan**    | Customer Features Developer      | Cart, add-to-cart, orders (frontend + backend), ERD model, schemas, report | **5.0** |
-| **Dat**     | Shipper Features Developer       | Shipper features (frontend + backend), report | **3.5** |
+| **Duc**     | Project Manager & Technical Lead | Repo & environment setup, vendor pages, my account (all roles), header/footer (all roles), theme (light/dark mode), feedback & static pages, register/login frontend design + theme, customer product view & details, ERD model, schemas, report contributions | **6.0** |
+| **Hung**    | Backend Developer                | Register/login backend (all roles), ERD model, schemas, report contributions, presentation slide template | **5.5** |
+| **Toan**    | Customer Features Developer      | Cart, add-to-cart, orders (frontend + backend), ERD model, schemas, report contributions | **5.0** |
+| **Dat**     | Shipper Features Developer       | Shipper features (frontend + backend), report contributions | **3.5** |
+
 
 
