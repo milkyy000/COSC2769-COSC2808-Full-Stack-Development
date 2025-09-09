@@ -62,3 +62,12 @@ npm run dev
 | **Toan**    | Customer Features Developer      | Cart, add-to-cart, orders (frontend + backend), ERD model, schemas, report contributions                                                                                                                                                                       | **5.0**            |
 | **Dat**     | Shipper Features Developer       | Shipper features (frontend + backend), report contributions                                                                                                                                                                                                    | **3.5**            |
 
+
+## TEST
+| Member Name | Role                             | Assigned Tasks               
+|-------------|----------------------------------|----------------
+| Duc         | Project Manager & Technical Lead |Repo & environment setup, vendor pages, my account (all roles), header/footer (all roles), theme (light/dark mode), feedback & static pages, register/login frontend design + theme, customer product view & details, ERD model, schemas, report contributions
+| Hung        | Backend Developer                | Register/login backend (all roles), ERD model, schemas, report contributions, presentation slide 
+| Toan        | Customer Features Developer      | Cart, add-to-cart, orders (frontend + backend), ERD model, schemas, report 
+| Dat         | Shipper Features Developer       | Shipper features (frontend + backend), report 
+
