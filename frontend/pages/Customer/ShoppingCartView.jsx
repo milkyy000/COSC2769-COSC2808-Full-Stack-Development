@@ -101,7 +101,7 @@ export default function ShoppingCartView() {
         {shoppingCart.items.map((item) => (
           <li
             key={item.product._id}
-            className="cartItem list-group-item d-flex justify-content-between align-items-center border rounded p-2 mb-2 shadow-sm"
+            className="cartItem list-group-item d-flex flex-wrap justify-content-between align-items-center border rounded p-2 mb-2 shadow-sm"
           >
             {/* Product Image */}
             <img
@@ -118,22 +118,22 @@ export default function ShoppingCartView() {
             </div>
 
             {/* Quantity Controls */}
-            <div className="d-flex align-items-center">
+            <div className="d-flex flex-wrap align-items-center justify-content-end" style={{ minWidth: "120px" }}>
               <button
-                className=" btn btn-sm btn-outline-secondary mx-1"
+                className="btn btn-sm btn-outline-secondary m-1"
                 onClick={() => updateQuantity(item.product._id, item.quantity - 1)}
               >
                 -
               </button>
-              <span className="mx-2">{item.quantity}</span>
+              <span className="m-1">{item.quantity}</span>
               <button
-                className="btn btn-sm btn-outline-secondary mx-1"
+                className="btn btn-sm btn-outline-secondary m-1"
                 onClick={() => updateQuantity(item.product._id, item.quantity + 1)}
               >
                 +
               </button>
               <button
-                className="btn btn-sm btn-danger ms-3"
+                className="btn btn-sm btn-danger m-1"
                 onClick={() => removeItem(item.product._id)}
               >
                 Remove
